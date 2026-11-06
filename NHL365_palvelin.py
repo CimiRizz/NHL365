@@ -189,6 +189,15 @@ class Handler(BaseHTTPRequestHandler):
         path=parsed.path
         if path in ('/','/index.html'):
             body=(ROOT/'index.html').read_bytes();typ='text/html; charset=utf-8'
+        elif path.startswith('/logos/'):
+            # Serve only known local PNG assets. Path normalization prevents traversal.
+            filename=path[len('/logos/'):]
+            if not re.fullmatch(r'[A-Z0-9_]+\.png', filename):
+                self.send_error(404);return
+            asset=ROOT/'logos'/filename
+            if not asset.is_file():
+                self.send_error(404);return
+            body=asset.read_bytes();typ='image/png'
         elif path=='/nhl365-logo.svg':
             body=(ROOT/'nhl365-logo.svg').read_bytes();typ='image/svg+xml'
         elif path=='/health':

@@ -32,3 +32,12 @@ saatavuutta ei ole vahvistettu Renderissä. Joukkueuutisia voi jäädä löytäm
 NHL:n logot eivät vielä sisälly pakettiin; käytössä on NHL365:n yleinen tunnus.
 
 KalPa365:n ja Liiga365:n nykyisiä repoja, brancheja ja julkaisuja ei muuteta.
+
+
+## v0.2: NHL-logojen integrointi
+
+- `logos/NHL.png` otsakkeessa; valitun joukkueen tunnus sen vieressä.
+- `logos/<TEAM>.png` joukkuevalinnan painikkeissa sekä ottelukorteissa.
+- `NHL365_palvelin.py` tarjoaa PNG:t paikallisesta `/logos/`-reitistä.
+- Utah Mammothin logo puuttuu toimitetusta kuvakoosteesta: käytetään NHL-kilpeä tilapäisenä tunnuksena. Arizona Coyotesin vanhaa logoa ei jaella.
+- Kaikki muut NHL365 v0.1:n uutis- ja otteluhakutoiminnot säilyvät.

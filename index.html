@@ -8,6 +8,12 @@
 .matches{margin:0 0 24px}.matches h2{font-size:23px;margin:0 0 12px}.matches-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}.match{background:#fff;border:1px solid #dce8df;border-radius:15px;padding:18px;box-shadow:0 4px 16px #0b2e1c0a}.match-date{font-size:13px;font-weight:750;color:#176b4e}.match-teams{display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-size:18px;font-weight:800;margin:10px 0}.team-inline{display:inline-flex;align-items:center;gap:6px;min-width:0}.team-logo{width:34px;height:34px;object-fit:contain;flex:none}.team-logo-fallback{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;font-size:11px;line-height:1;font-weight:900;background:#edf0ef;color:#172a22;border:2px solid #b8c1be}.match-dash{color:#73847a}@media(max-width:450px){.match-teams{font-size:16px}.team-logo,.team-logo-fallback{width:28px;height:28px}}.match-location{font-size:13px;color:#62746a}.matches-note{font-size:12px;color:#6c7d74;margin:9px 0 0}@media(max-width:720px){.matches-grid{grid-template-columns:1fr}}
 
 .latest-news{margin:0 0 24px}.latest-news h2{font-size:23px;margin:0 0 12px}
+
+.selected-team-logo{width:56px;height:56px;object-fit:contain;flex:none}
+.team-choices button{display:flex;align-items:center;gap:9px;text-align:left;justify-content:flex-start;padding:9px}
+.choice-logo{width:40px;height:40px;object-fit:contain;flex:none}
+.choice-logo-fallback{width:40px;height:40px;display:grid;place-items:center;font-weight:800;font-size:10px;color:#4b6258;flex:none}
+@media(max-width:600px){.selected-team-logo{width:42px;height:42px}.choice-logo,.choice-logo-fallback{width:33px;height:33px}}
 </style></head><body><div id="teamSelector" class="team-selector" role="dialog" aria-modal="true" aria-labelledby="teamSelectTitle" hidden>
 <div class="team-select-panel"><h2 id="teamSelectTitle">NHL365</h2><p>Valitse seurattava NHL-joukkue</p><div id="teamChoices" class="team-choices"></div><p class="team-choice-note">Valinta tallennetaan tähän selaimeen. Voit vaihtaa joukkuetta myöhemmin.</p></div></div>
 <style>
@@ -20,8 +26,8 @@
 .team-choice-note{font-size:12px}.team-switch{margin-left:auto;background:#254437;border:1px solid #54796a;padding:9px 12px;font-size:13px}
 @media(max-width:600px){.team-choices{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style>
-<header><div class="brand"><div class="mark"><img class="kalpa-logo" src="/nhl365-logo.svg" alt="NHL365-logo" width="70" height="76"></div><div><h1 id="siteName">NHL365</h1><p id="siteSubtitle">Valitse seurattava joukkue.</p></div><button class="team-switch" id="changeTeam" type="button">Vaihda joukkuetta</button></div></header>
-<main><section class="matches" aria-label="Valitun joukkueen seuraavat kolme ottelua"><h2>Seuraavat 3 ottelua</h2><div class="matches-grid" id="nextMatches"><div class="match">Ladataan otteluita…</div></div><p class="matches-note">Ottelutiedot: NHL:n julkinen ottelurajapinta (kausi 2026–2027). Tarkista mahdolliset muutokset virallisesta otteluohjelmasta.</p></section><section class="latest-news" aria-label="Kolme uusinta joukkueuutista"><h2>3 uusinta uutista</h2><div id="latestGrid" class="grid"><div class="empty">Haetaan uusimpia uutisia…</div></div></section><div class="bar"><input id="search" type="search" placeholder="Hae joukkueen uutisista…" aria-label="Hae uutisista"><select id="source" aria-label="Uutislähde"><option value="">Kaikki uutislähteet</option></select><button id="refresh">↻ Päivitä uutiset</button></div><div id="status" class="summary" role="status">Haetaan joukkueen uutisia…</div><div id="grid" class="grid"></div><p class="note">NHL365 kokoaa julkisten uutissyötteiden otsikoita ja linkkejä. Uutiset avautuvat ensin NHL365:n häiriöttömään lukutilaan. Koko artikkelin voi avata myös julkaisijan sivulla. Uutisten saatavuus riippuu lähteistä; osa artikkeleista voi olla maksumuurin takana. Palvelu on epävirallinen eikä ole Liigan tai seurojen ylläpitämä.</p></main><div id="readerOverlay" class="reader-overlay" role="dialog" aria-modal="true" aria-labelledby="readerTitle" aria-hidden="true"><div class="reader"><button id="readerClose" class="reader-close" aria-label="Sulje lukutila">✕</button><div id="readerMeta" class="reader-meta"></div><h2 id="readerTitle"></h2><div id="readerText"></div><a id="readerOriginal" class="reader-link" target="_blank" rel="noopener noreferrer">Avaa alkuperäinen artikkeli ↗</a><p class="reader-notice">NHL365 yrittää näyttää artikkelin julkisesti saatavilla olevan tekstin ilman evästeikkunoita. Jos tekstin haku ei onnistu, näytetään syötteen tiivistelmä tai otsikko.</p></div></div><footer>NHL365 · kehitysversio 0.1 · feature/nhl365</footer>
+<header><div class="brand"><div class="mark"><img class="kalpa-logo" src="/logos/NHL.png" alt="NHL-liigan tunnus" width="70" height="76"></div><img id="selectedTeamLogo" class="selected-team-logo" src="" alt="" hidden><div><h1 id="siteName">NHL365</h1><p id="siteSubtitle">Valitse seurattava joukkue.</p></div><button class="team-switch" id="changeTeam" type="button">Vaihda joukkuetta</button></div></header>
+<main><section class="matches" aria-label="Valitun joukkueen seuraavat kolme ottelua"><h2>Seuraavat 3 ottelua</h2><div class="matches-grid" id="nextMatches"><div class="match">Ladataan otteluita…</div></div><p class="matches-note">Ottelutiedot: NHL:n julkinen ottelurajapinta (kausi 2026–2027). Tarkista mahdolliset muutokset virallisesta otteluohjelmasta.</p></section><section class="latest-news" aria-label="Kolme uusinta joukkueuutista"><h2>3 uusinta uutista</h2><div id="latestGrid" class="grid"><div class="empty">Haetaan uusimpia uutisia…</div></div></section><div class="bar"><input id="search" type="search" placeholder="Hae joukkueen uutisista…" aria-label="Hae uutisista"><select id="source" aria-label="Uutislähde"><option value="">Kaikki uutislähteet</option></select><button id="refresh">↻ Päivitä uutiset</button></div><div id="status" class="summary" role="status">Haetaan joukkueen uutisia…</div><div id="grid" class="grid"></div><p class="note">NHL365 kokoaa julkisten uutissyötteiden otsikoita ja linkkejä. Uutiset avautuvat ensin NHL365:n häiriöttömään lukutilaan. Koko artikkelin voi avata myös julkaisijan sivulla. Uutisten saatavuus riippuu lähteistä; osa artikkeleista voi olla maksumuurin takana. Palvelu on epävirallinen eikä ole NHL:n tai seurojen ylläpitämä.</p></main><div id="readerOverlay" class="reader-overlay" role="dialog" aria-modal="true" aria-labelledby="readerTitle" aria-hidden="true"><div class="reader"><button id="readerClose" class="reader-close" aria-label="Sulje lukutila">✕</button><div id="readerMeta" class="reader-meta"></div><h2 id="readerTitle"></h2><div id="readerText"></div><a id="readerOriginal" class="reader-link" target="_blank" rel="noopener noreferrer">Avaa alkuperäinen artikkeli ↗</a><p class="reader-notice">NHL365 yrittää näyttää artikkelin julkisesti saatavilla olevan tekstin ilman evästeikkunoita. Jos tekstin haku ei onnistu, näytetään syötteen tiivistelmä tai otsikko.</p></div></div><footer>NHL365 · kehitysversio 0.2 · feature/nhl365</footer>
 <script>
 const $=id=>document.getElementById(id);let selectedTeam=null;let articles=[];let lastUpdate='';let readerLastFocus=null;
 // v0.7: Cache only the three newest articles per club in this browser.
@@ -111,14 +117,15 @@ async function load(){
 $('latestGrid').addEventListener('click',e=>{const b=e.target.closest('[data-reader]');if(b)openReader(Number(b.dataset.reader))});$('grid').addEventListener('click',e=>{const b=e.target.closest('[data-reader]');if(b)openReader(Number(b.dataset.reader))});$('search').addEventListener('input',render);$('source').addEventListener('change',render);$('refresh').addEventListener('click',()=>{if(selectedTeam)load()});setInterval(()=>{if(selectedTeam&&!document.hidden&&newsRefreshing)load()},2500);setInterval(()=>{if(selectedTeam&&!document.hidden&&!newsRefreshing)load()},60000);
 
 // Joukkueiden logot ovat paikallisia tiedostoja: ei ulkoisia kuvapalveluita.
-const TEAM_LOGOS={};
+const TEAM_LOGOS={"ana":"/logos/ANA.png","bos":"/logos/BOS.png","buf":"/logos/BUF.png","car":"/logos/CAR.png","cbj":"/logos/CBJ.png","cgy":"/logos/CGY.png","chi":"/logos/CHI.png","col":"/logos/COL.png","dal":"/logos/DAL.png","det":"/logos/DET.png","edm":"/logos/EDM.png","fla":"/logos/FLA.png","lak":"/logos/LAK.png","min":"/logos/MIN.png","mtl":"/logos/MTL.png","njd":"/logos/NJD.png","nsh":"/logos/NSH.png","nyi":"/logos/NYI.png","nyr":"/logos/NYR.png","ott":"/logos/OTT.png","phi":"/logos/PHI.png","pit":"/logos/PIT.png","sea":"/logos/SEA.png","sjs":"/logos/SJS.png","stl":"/logos/STL.png","tbl":"/logos/TBL.png","tor":"/logos/TOR.png","van":"/logos/VAN.png","vgk":"/logos/VGK.png","wpg":"/logos/WPG.png","wsh":"/logos/WSH.png","uta":"/logos/NHL.png"};
 function teamHtml(name){
  const n=String(name||'');
- const key=n.trim().toLocaleLowerCase('fi-FI').replace(/\s+/g,'-');
+ const key=Object.keys(TEAM_LABELS).find(id=>TEAM_LABELS[id].toLowerCase()===n.trim().toLowerCase()) || '';
  const url=TEAM_LOGOS[key];
  const label=escapeHtml(n);
+ const logoAlt=key==='uta'?'NHL-tunnus (Utahin joukkuekuva puuttuu)':n+' logo';
  const fallback='<span class="team-logo-fallback" aria-hidden="true">'+escapeHtml(n.slice(0,3).toUpperCase())+'</span>';
- return '<span class="team-inline">'+(url?'<img class="team-logo" src="'+url+'" alt="'+label+' logo" onerror="this.outerHTML=decodeURIComponent(this.dataset.fallback)" data-fallback="'+encodeURIComponent(fallback)+'">':fallback)+'<span>'+label+'</span></span>';
+ return '<span class="team-inline">'+(url?'<img class="team-logo" src="'+url+'" alt="'+escapeHtml(logoAlt)+'" onerror="this.outerHTML=decodeURIComponent(this.dataset.fallback)" data-fallback="'+encodeURIComponent(fallback)+'">':fallback)+'<span>'+label+'</span></span>';
 }
 
 
@@ -142,7 +149,7 @@ async function loadMatches(){
   const now=Date.now();
   const upcoming=games.filter(g=>g.date&&Number.isFinite(Date.parse(g.date))&&Date.parse(g.date)>=now-3*60*60*1000)
     .sort((a,b)=>Date.parse(a.date)-Date.parse(b.date)).slice(0,3);
-  if(!upcoming.length){target.innerHTML='<div class="match">'+(payload.refreshing?'Haetaan otteluita…':'Otteluita ei juuri nyt saatu virallisesta lähteestä.')+' <a href="https://nhl.com/fi/ohjelma?kausi=2026-2027" target="_blank" rel="noopener noreferrer">Liigan otteluohjelma</a></div>';return}
+  if(!upcoming.length){target.innerHTML='<div class="match">'+(payload.refreshing?'Haetaan otteluita…':'Otteluita ei juuri nyt saatu virallisesta lähteestä.')+' <a href="https://nhl.com/fi/ohjelma?kausi=2026-2027" target="_blank" rel="noopener noreferrer">NHL:n otteluohjelma</a></div>';return}
   target.innerHTML=upcoming.map(g=>{
    const d=new Date(g.date);
    const when=d.toLocaleString('fi-FI',{timeZone:'Europe/Helsinki',weekday:'short',day:'numeric',month:'numeric',hour:'2-digit',minute:'2-digit'});
@@ -161,11 +168,11 @@ function setTeam(id){
  $('teamSelector').hidden=true;
  $('siteName').textContent='NHL365';
  $('siteSubtitle').textContent=TEAM_LABELS[id]+' – uutiset ja ottelut';
- const brandLogo=document.querySelector('.brand .kalpa-logo');
- if(brandLogo){
-   brandLogo.src=(typeof TEAM_LOGOS!=='undefined' && TEAM_LOGOS[id]) ? TEAM_LOGOS[id] : '/nhl365-logo.svg';
-   brandLogo.alt='NHL365';
-   brandLogo.parentElement.style.display='';
+ const chosenLogo=$('selectedTeamLogo');
+ if(chosenLogo){
+   chosenLogo.src=TEAM_LOGOS[id]||'/logos/NHL.png';
+   chosenLogo.alt=id==='uta'?'NHL-tunnus (Utahin oma logo ei ole mukana)':TEAM_LABELS[id]+' logo';
+   chosenLogo.hidden=false;
  }
  // Invalidate outstanding responses from the previously selected team.
  newsFetchSequence++;newsFetchFor=null;newsRefreshing=false;newsLoading=true;
@@ -175,7 +182,7 @@ function setTeam(id){
  $('grid').innerHTML='';
  load();loadMatches();
 }
-$('teamChoices').innerHTML=NHL_TEAMS.map(([id,label])=>'<button type="button" data-team="'+id+'">'+escapeHtml(label)+'</button>').join('');
+$('teamChoices').innerHTML=NHL_TEAMS.map(([id,label])=>`<button type="button" data-team="${id}"><img class="choice-logo" src="${TEAM_LOGOS[id]||'/logos/NHL.png'}" alt="" loading="lazy"><span>${escapeHtml(label)}</span></button>`).join('');
 $('teamChoices').addEventListener('click',e=>{const el=e.target.closest('[data-team]');if(el)setTeam(el.dataset.team)});
 $('changeTeam').addEventListener('click',showTeamSelector);
 let savedTeam=null;try{savedTeam=localStorage.getItem('nhl365-team')}catch(e){}
