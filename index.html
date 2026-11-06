@@ -111,7 +111,7 @@ button:disabled{opacity:.55;cursor:wait}
 </style>
 
 <style>
-/* NHL365 v0.8 — per-team city skyline between the team title and Change Team. */
+/* NHL365 v0.9 — locally cached and rotating city skylines. */
 header{padding:12px clamp(16px,2.7vw,48px)!important;overflow:hidden}
 header .brand{width:100%;max-width:1800px;margin:0 auto;display:flex;align-items:center;gap:clamp(9px,1.25vw,20px);min-height:96px}
 header .mark{width:58px;height:66px;flex:0 0 58px}
@@ -119,10 +119,10 @@ header .selected-team-logo{width:58px;height:58px;flex:0 0 58px}
 header .brand-copy{flex:0 1 auto;min-width:190px;max-width:475px;z-index:1}
 header .brand-copy h1{font-size:clamp(25px,2.2vw,37px);line-height:1.05;font-weight:850;white-space:nowrap;font-style:italic;letter-spacing:-1.2px}
 header .brand-copy p{font-size:clamp(12px,1.08vw,16px);line-height:1.32;margin-top:7px;white-space:nowrap;color:#e0e8f0}
-header .city-skyline{height:94px;min-width:105px;flex:1 1 280px;position:relative;overflow:hidden;isolation:isolate;align-self:stretch;background:#0d1520}
+header .city-skyline{height:64px;min-width:105px;flex:1 1 280px;position:relative;overflow:hidden;isolation:isolate;align-self:stretch;background:#0d1520}
 .city-skyline-fallback,.city-skyline-photo,.city-skyline-shade{position:absolute;inset:0;width:100%;height:100%}
-.city-skyline-fallback{background-size:cover;background-position:center center;z-index:0}
-.city-skyline-photo{object-fit:cover;object-position:center 59%;z-index:1;opacity:0;transition:opacity .48s ease}
+.city-skyline-fallback{background-size:contain;background-position:center bottom;background-repeat:no-repeat;z-index:0}
+.city-skyline-photo{object-fit:contain;object-position:center bottom;z-index:1;opacity:0;transition:opacity .48s ease}
 .city-skyline-photo.loaded{opacity:1}
 .city-skyline-shade{z-index:2;pointer-events:none;background:linear-gradient(90deg,#080f19 0%,#080f1955 16%,transparent 38%,transparent 72%,#080f194b 100%),linear-gradient(0deg,#090f18aa,transparent 47%)}
 .city-skyline-name{position:absolute;z-index:3;bottom:10px;left:22px;letter-spacing:.22em;font-size:10px;font-weight:800;color:#fff;text-shadow:0 2px 5px #000;opacity:.8;text-transform:uppercase}
@@ -130,11 +130,11 @@ header .city-skyline{height:94px;min-width:105px;flex:1 1 280px;position:relativ
 .city-skyline-credit:hover{text-decoration:underline}
 header .team-switch{margin-left:0;flex:0 0 auto;z-index:4;white-space:nowrap}
 @media(max-width:1080px){header .brand-copy{max-width:305px}header .brand-copy h1{font-size:27px}header .mark{flex-basis:53px;width:53px;height:60px}header .selected-team-logo{width:48px;height:48px;flex-basis:48px}}
-@media(max-width:820px){header .brand{display:grid;grid-template-columns:56px 50px minmax(0,1fr) auto;column-gap:11px;row-gap:7px;min-height:0}header .mark{grid-column:1;grid-row:1;width:56px;height:62px}header .selected-team-logo{grid-column:2;grid-row:1;width:50px;height:50px}header .brand-copy{grid-column:3;grid-row:1;min-width:0;max-width:none}header .brand-copy h1{font-size:25px}header .brand-copy p{white-space:normal;font-size:13px}header .team-switch{grid-column:4;grid-row:1;margin:0}header .city-skyline{grid-row:2;grid-column:1/-1;height:70px;width:100%;min-width:0;align-self:auto}}
-@media(max-width:560px){header .brand{grid-template-columns:42px 38px minmax(0,1fr);gap:7px}header .mark{width:42px;height:50px}header .selected-team-logo{width:38px;height:38px}header .brand-copy h1{font-size:23px}header .brand-copy p{font-size:12px}header .city-skyline{grid-row:2;grid-column:1/-1;height:69px}header .team-switch{grid-row:3;grid-column:1/-1;justify-self:end;margin:3px 0 1px;width:auto;padding:9px 14px}header .city-skyline-name{left:12px}}
+@media(max-width:820px){header .brand{display:grid;grid-template-columns:56px 50px minmax(0,1fr) auto;column-gap:11px;row-gap:7px;min-height:0}header .mark{grid-column:1;grid-row:1;width:56px;height:62px}header .selected-team-logo{grid-column:2;grid-row:1;width:50px;height:50px}header .brand-copy{grid-column:3;grid-row:1;min-width:0;max-width:none}header .brand-copy h1{font-size:25px}header .brand-copy p{white-space:normal;font-size:13px}header .team-switch{grid-column:4;grid-row:1;margin:0}header .city-skyline{grid-row:2;grid-column:1/-1;height:50px;width:100%;min-width:0;align-self:auto}}
+@media(max-width:560px){header .brand{grid-template-columns:42px 38px minmax(0,1fr);gap:7px}header .mark{width:42px;height:50px}header .selected-team-logo{width:38px;height:38px}header .brand-copy h1{font-size:23px}header .brand-copy p{font-size:12px}header .city-skyline{grid-row:2;grid-column:1/-1;height:48px}header .team-switch{grid-row:3;grid-column:1/-1;justify-self:end;margin:3px 0 1px;width:auto;padding:9px 14px}header .city-skyline-name{left:12px}}
 @media(prefers-reduced-motion:reduce){.city-skyline-photo{transition:none}}
 </style>
-<header><div class="brand"><div class="mark"><img class="kalpa-logo" src="https://assets.nhle.com/logos/nhl/svg/NHL_light.svg" alt="NHL logo" data-logo-key="NHL" data-logo-theme="light" width="70" height="76"></div><img id="selectedTeamLogo" class="selected-team-logo" src="" alt="" hidden><div class="brand-copy"><h1 id="siteName">NHL365</h1><p id="siteSubtitle">Choose a team to follow.</p></div><div class="city-skyline" id="citySkyline" role="img" aria-label="City skyline"><div class="city-skyline-fallback" id="citySkylineFallback" aria-hidden="true"></div><img class="city-skyline-photo" id="citySkylinePhoto" alt="" decoding="async" aria-hidden="true" hidden><div class="city-skyline-shade" aria-hidden="true"></div><span class="city-skyline-name" id="citySkylineName" aria-hidden="true"></span><a class="city-skyline-credit" id="citySkylineCredit" target="_blank" rel="noopener noreferrer" hidden></a></div><button class="team-switch" id="changeTeam" type="button" aria-label="Change NHL team"><span class="team-switch-icon" aria-hidden="true">⇄</span><span class="team-switch-label">Change Team</span><span class="team-switch-chevron" aria-hidden="true">›</span></button></div></header>
+<header><div class="brand"><div class="mark"><img class="kalpa-logo" src="https://assets.nhle.com/logos/nhl/svg/NHL_light.svg" alt="NHL logo" data-logo-key="NHL" data-logo-theme="light" width="70" height="76"></div><img id="selectedTeamLogo" class="selected-team-logo" src="" alt="" hidden><div class="brand-copy"><h1 id="siteName">NHL365</h1><p id="siteSubtitle">Choose a team to follow.</p></div><div class="city-skyline" id="citySkyline" role="img" aria-label="City skyline"><div class="city-skyline-fallback" id="citySkylineFallback" aria-hidden="true"></div><img class="city-skyline-photo" id="citySkylinePhoto" alt="" decoding="async" loading="eager" fetchpriority="high" aria-hidden="true" hidden><div class="city-skyline-shade" aria-hidden="true"></div><span class="city-skyline-name" id="citySkylineName" aria-hidden="true"></span><a class="city-skyline-credit" id="citySkylineCredit" target="_blank" rel="noopener noreferrer" hidden></a></div><button class="team-switch" id="changeTeam" type="button" aria-label="Change NHL team"><span class="team-switch-icon" aria-hidden="true">⇄</span><span class="team-switch-label">Change Team</span><span class="team-switch-chevron" aria-hidden="true">›</span></button></div></header>
 <main><section class="matches" aria-label="Next three games for the selected team"><h2>Next 3 games</h2><div class="matches-grid" id="nextMatches"><div class="match">Loading games…</div></div><p class="matches-note">Game data: NHL public schedule API (2026–27 season). Check the official schedule for changes.</p></section><section class="latest-news" aria-label="Three latest team news stories"><h2>3 latest news stories</h2><div id="latestGrid" class="grid"><div class="empty">Loading the latest news…</div></div></section><div class="bar"><input id="search" type="search" placeholder="Search team news…" aria-label="Search news"><select id="source" aria-label="News source"><option value="">All news sources</option></select><button id="refresh">↻ Refresh news</button></div><div id="status" class="summary" role="status">Loading team news…</div><div id="grid" class="grid"></div><p class="note">NHL365 collects headlines and links from publicly accessible news feeds. Stories open in NHL365’s distraction-free reader, with an option to view the original publisher’s page. Availability varies by source; some articles may be behind a paywall. This is an independent fan service, not affiliated with the NHL or its teams.</p></main><div id="readerOverlay" class="reader-overlay" role="dialog" aria-modal="true" aria-labelledby="readerTitle" aria-hidden="true"><div class="reader"><button id="readerClose" class="reader-close" aria-label="Close reader">✕</button><div id="readerMeta" class="reader-meta"></div><h2 id="readerTitle"></h2><div id="readerText"></div><a id="readerOriginal" class="reader-link" target="_blank" rel="noopener noreferrer">Open original article ↗</a><p class="reader-notice">NHL365 attempts to show publicly available article text without cookie pop-ups. If the full text is unavailable, a summary or headline is shown instead.</p></div></div><footer>NHL365 · development version 0.8 · feature/nhl365</footer>
 <script>
 const $=id=>document.getElementById(id);let selectedTeam=null;let articles=[];let lastUpdate='';let readerLastFocus=null;
@@ -347,77 +347,47 @@ const TEAM_SKYLINE={
  van:['Vancouver','Vancouver BC skyline night'],vgk:['Las Vegas','Las Vegas skyline night'],
  wpg:['Winnipeg','Winnipeg Manitoba skyline night'],wsh:['Washington, D.C.','Washington DC skyline dusk']
 };
-const skylineImageMemory=new Map();let skylineRequestVersion=0;
+// NHL365 v0.9: local assets. No remote search, cross-origin fetch, or runtime photo API.
+// Three distinct pre-generated WebP illustrations per team.
+const skylineSessionChoices=new Map();
 function skylineArt(team){
- // Decorative city-specific stylized silhouette while the city photo loads.
- const city=(TEAM_SKYLINE[team]||['NHL365'])[0];
- const seed=[...team].reduce((n,c)=>n*31+c.charCodeAt(0),17)>>>0;
- let rand=seed; const rng=()=>{rand=(Math.imul(rand,1664525)+1013904223)>>>0;return rand/4294967296};
+ // Always-available lightweight SVG fallback if an image is missing or still downloading.
  const [primary,secondary]=TEAM_COLOR_PALETTE[team]||['#245a99','#efd49e'];
- let shapes='',windows='';let x=0;
- while(x<1300){const w=24+Math.floor(rng()*66),h=30+Math.floor(rng()*105),y=190-h;
-  shapes+=`<rect x="${x}" y="${y}" width="${w}" height="${h+24}" fill="${rng()>.5?'#111827':'#172031'}"/>`;
-  for(let wx=x+6;wx<x+w-5;wx+=12)for(let wy=y+7;wy<183;wy+=13)if(rng()>.43)windows+=`<rect x="${wx}" y="${wy}" width="3" height="5" fill="${rng()>.75?'#f1c877':'#91c7e3'}" opacity=".65"/>`;
-  x+=w+2;
+ const city=(TEAM_SKYLINE[team]||['NHL'])[0];
+ let blocks='';let n=Array.from(team).reduce((a,c)=>a*31+c.charCodeAt(0),17)>>>0;
+ for(let i=0;i<27;i++){
+   n=(Math.imul(n,1664525)+1013904223)>>>0;
+   const h=30+(n%105),x=i*51;
+   blocks+=`<rect x="${x}" y="${192-h}" width="49" height="${h}" fill="${i%2?'#121d2c':'#1b2a3c'}"/>`;
  }
- let landmark='';
- // Characteristic simplified silhouettes for selected skyline landmarks.
- if(team==='tor')landmark='<rect x="645" y="31" width="7" height="156" fill="#a1afb9"/><path d="M632 83L667 83L658 93L640 93Z" fill="#d3b477"/><path d="M650 15L650 31" stroke="#b9cfdb" stroke-width="3"/>';
- else if(team==='sea')landmark='<path d="M630 181L638 69H657L665 181Z" fill="#9baab8"/><path d="M604 75Q647 51 689 75L674 83H619Z" fill="#b8ced9"/><path d="M647 27L647 62" stroke="#d4e6ee" stroke-width="4"/>';
- else if(team==='stl')landmark='<path d="M590 180Q644 -5 698 180" fill="none" stroke="#d6dce5" stroke-width="8"/>';
- else if(team==='wsh')landmark='<path d="M646 50L656 180H636Z" fill="#ded9ca"/>';
- else if(team==='cgy')landmark='<path d="M637 47L632 180H658L653 47Z" fill="#aebbc7"/><ellipse cx="645" cy="68" rx="28" ry="7" fill="#e4c2a0"/><path d="M645 16V47" stroke="#aab5be" stroke-width="3"/>';
- else if(team==='vgk')landmark='<path d="M635 187L642 42L650 187Z" fill="#a6a7b3"/><ellipse cx="642" cy="61" rx="18" ry="20" fill="#f0ba83"/><path d="M642 22V42" stroke="#f0ba83" stroke-width="3"/>';
- else if(team==='nsh')landmark='<path d="M625 185V59L637 52L648 59L659 52V185Z" fill="#98a9bc"/><path d="M648 33V52" stroke="#adc6d8" stroke-width="2"/>';
- else if(team==='dal')landmark='<path d="M642 182V62" stroke="#8fabb6" stroke-width="7"/><circle cx="642" cy="67" r="22" fill="#a1c7ca"/><circle cx="642" cy="67" r="15" fill="#263343"/>';
- else if(team==='chi')landmark='<rect x="632" y="25" width="27" height="165" fill="#26313c"/><path d="M637 25V1M652 25V1" stroke="#acb9c6" stroke-width="3"/>';
- const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="1300" height="220" viewBox="0 0 1300 220"><defs><linearGradient id="sky" x2="0" y2="1"><stop stop-color="#07111e"/><stop offset=".58" stop-color="${primary}" stop-opacity=".37"/><stop offset="1" stop-color="#080e19"/></linearGradient><linearGradient id="glow"><stop stop-color="${secondary}" stop-opacity=".2"/><stop offset="1" stop-color="${secondary}" stop-opacity="0"/></linearGradient></defs><rect width="1300" height="220" fill="url(#sky)"/><ellipse cx="760" cy="162" rx="430" ry="95" fill="url(#glow)"/><path d="M0 191L1300 191" stroke="${secondary}" stroke-opacity=".45"/><g>${shapes}${landmark}${windows}</g><rect y="193" width="1300" height="27" fill="#070d17"/><text x="1008" y="36" font-size="19" font-family="Arial,sans-serif" font-weight="700" letter-spacing="5" fill="${secondary}" opacity=".27">${city.replace(/&/g,'&amp;')}</text></svg>`;
+ const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="240" viewBox="0 0 1200 240"><rect width="1200" height="240" fill="#101c2d"/><path d="${'M0 190 L1200 190'}" stroke="${primary}" stroke-width="3"/><g>${blocks}</g><rect y="195" width="1200" height="45" fill="#0a111b"/></svg>`;
  return 'url("data:image/svg+xml,'+encodeURIComponent(svg)+'")';
 }
-function skylinePhotoUrl(record){return String(record?.thumburl||record?.url||'');}
-function setSkylinePhoto(team,record){
- if(team!==selectedTeam||!record?.url)return;
- const img=$('citySkylinePhoto');const credit=$('citySkylineCredit');
- img.onload=()=>{if(team===selectedTeam){img.hidden=false;img.classList.add('loaded')}};
- img.onerror=()=>{img.classList.remove('loaded');img.hidden=true;credit.hidden=true};
- img.classList.remove('loaded');img.hidden=false;img.src=record.url;
- credit.hidden=false;credit.href=record.page;
- credit.textContent=record.credit||'Photo: Wikimedia Commons';
- credit.title=record.credit||'Photo attribution';
-}
-async function loadSkylinePhoto(team){
- const stored=skylineImageMemory.get(team);
- if(stored){setSkylinePhoto(team,stored);return}
+function nextSkylineVariant(team){
+ // One change on initial app opening and once when a different team is selected.
+ // The team-specific count is retained in localStorage across browser sessions.
+ const key='nhl365-skyline-index-'+team;
+ let previous=-1;
  try{
-  const cacheKey='nhl365-skyline-v1-'+team;
-  const saved=JSON.parse(sessionStorage.getItem(cacheKey)||'null');
-  if(saved?.url){skylineImageMemory.set(team,saved);setSkylinePhoto(team,saved);return}
-  const [,query]=TEAM_SKYLINE[team];
-  const params=new URLSearchParams({action:'query',generator:'search',gsrsearch:query+' filetype:bitmap',gsrnamespace:'6',gsrlimit:'15',prop:'imageinfo',iiprop:'url|size|extmetadata',iiurlwidth:'1400',format:'json',origin:'*'});
-  const ctl=new AbortController();const tm=setTimeout(()=>ctl.abort(),6500);
-  let data;
-  try{const res=await fetch('https://commons.wikimedia.org/w/api.php?'+params,{signal:ctl.signal,mode:'cors'});if(!res.ok)throw Error('photo search failed');data=await res.json()}finally{clearTimeout(tm)}
-  const list=Object.values(data?.query?.pages||{}).filter(page=>page.imageinfo?.length).map(page=>({title:page.title,info:page.imageinfo[0]}));
-  const city=TEAM_SKYLINE[team][0].toLowerCase().split(/[ ,]/)[0];
-  const choices=list.filter(p=>{const i=p.info,m=i.extmetadata||{},license=(m.LicenseShortName?.value||'').toLowerCase();return (i.width||0)>=950&&(i.height||0)>=420&&(i.width/i.height)>=1.4&&/cc by|cc0|public domain/.test(license)&&/^https:\/\//.test(skylinePhotoUrl(i))&&p.title.toLowerCase().includes(city)});
-  choices.sort((a,b)=>{const score=p=>{const t=p.title.toLowerCase();return (t.includes('skyline')?12:0)+(t.includes('night')?5:0)+(t.includes('dusk')?5:0)+(t.includes('panorama')?3:0)+Math.min(3,p.info.width/p.info.height)};return score(b)-score(a)});
-  if(!choices.length)return;
-  const chosen=choices[0], meta=chosen.info.extmetadata||{};
-  const clean=s=>String(s||'').replace(/<[^>]*>/g,'').replace(/&amp;/g,'&').trim().slice(0,95);
-  const record={url:skylinePhotoUrl(chosen.info),page:'https://commons.wikimedia.org/wiki/'+encodeURIComponent(chosen.title.replaceAll(' ','_')),credit:clean(meta.Artist?.value||'Wikimedia Commons')+' · '+clean(meta.LicenseShortName?.value||'CC')};
-  skylineImageMemory.set(team,record);
-  try{sessionStorage.setItem(cacheKey,JSON.stringify(record))}catch(e){}
-  if(team===selectedTeam)setSkylinePhoto(team,record);
- }catch(e){/* The illustrated skyline remains visible if Commons is inaccessible. */}
+   const raw=localStorage.getItem(key);
+   if(raw!==null){previous=Number(raw);if(!Number.isInteger(previous)||previous<0||previous>2)previous=-1}
+ }catch(e){if(skylineSessionChoices.has(team))previous=skylineSessionChoices.get(team)}
+ const next=(previous+1)%3;
+ skylineSessionChoices.set(team,next);
+ try{localStorage.setItem(key,String(next))}catch(e){}
+ return next+1;
 }
 function setCitySkyline(team){
  const city=(TEAM_SKYLINE[team]||['NHL'])[0];
  $('citySkyline').setAttribute('aria-label',city+' city skyline');
  $('citySkylineName').textContent=city;
  $('citySkylineFallback').style.backgroundImage=skylineArt(team);
- const img=$('citySkylinePhoto');img.hidden=true;img.classList.remove('loaded');img.removeAttribute('src');
+ const img=$('citySkylinePhoto');
+ img.classList.remove('loaded');img.hidden=false;
+ img.onload=()=>{if(team===selectedTeam){img.hidden=false;img.classList.add('loaded')}};
+ img.onerror=()=>{img.hidden=true;img.classList.remove('loaded')};
+ img.src='/static/skylines/'+team+'-'+nextSkylineVariant(team)+'.webp';
  $('citySkylineCredit').hidden=true;
- loadSkylinePhoto(team);
 }
 
 function showTeamSelector(){ $('teamSelector').hidden=false; }
