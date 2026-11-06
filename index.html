@@ -100,9 +100,9 @@ header .header-actions button.team-switch .team-switch-label {
 </style>
 <style id="nhl365-v016-header-repair">
 /* NHL365 v0.16: always-visible inline skyline art */
-header .city-skyline {display:block!important;visibility:visible!important;opacity:1!important;background:#101925!important;overflow:hidden!important;min-height:48px!important}
-header .city-skyline-fallback {display:block!important;visibility:visible!important;opacity:1!important;background-position:center bottom!important;background-repeat:no-repeat!important;background-size:contain!important;z-index:0!important}
-header .city-skyline-photo.loaded {display:block!important;visibility:visible!important;opacity:1!important;object-fit:contain!important;object-position:center bottom!important}
+header .city-skyline {display:block!important;visibility:visible!important;opacity:1!important;background:#101925!important;overflow:hidden!important;min-height:48px!important;border-radius:16px!important}
+header .city-skyline-fallback {display:block!important;visibility:visible!important;opacity:1!important;background-position:center center!important;background-repeat:no-repeat!important;background-size:cover!important;z-index:0!important}
+header .city-skyline-photo.loaded {display:block!important;visibility:visible!important;opacity:1!important;object-fit:cover!important;object-position:center center!important}
 header .city-skyline-shade {opacity:.24!important;pointer-events:none!important}
 /* Hockey-puck-shaped team changer: flat black top, burgundy side wall. */
 header .header-actions button.team-switch {
@@ -148,7 +148,7 @@ header .header-actions button.team-switch::before,
 header .header-actions button.team-switch::after {content:none!important;display:none!important;}
 header .header-actions button.team-switch img.approved-puck-art {
  display:block!important;width:100%!important;height:100%!important;max-width:none!important;
- object-fit:contain!important;pointer-events:none!important;user-select:none!important;
+ object-fit:cover!important;pointer-events:none!important;user-select:none!important;
 }
 header .header-actions button.team-switch:hover {transform:translateY(-2px) scale(1.045)!important;filter:brightness(1.08)!important;}
 header .header-actions button.team-switch:active {transform:translateY(2px) scale(.96)!important;filter:brightness(.94)!important;}
@@ -175,7 +175,7 @@ header .header-actions #changeTeam.team-switch::before,
 header .header-actions #changeTeam.team-switch::after {display:none!important;content:none!important;background:none!important;box-shadow:none!important;}
 header .header-actions #changeTeam.team-switch .approved-puck-art {
  display:block!important;width:100%!important;height:100%!important;
- max-width:none!important;max-height:none!important;object-fit:contain!important;
+ max-width:none!important;max-height:none!important;object-fit:cover!important;
  margin:0!important;padding:0!important;border:0!important;border-radius:0!important;
  background:transparent!important;box-shadow:none!important;pointer-events:none!important;
 }
@@ -235,7 +235,7 @@ header .header-actions #changeTeam.team-switch {
   margin-left:24px!important;
 }
 header .header-actions #changeTeam .approved-puck-art {
-  width:100%!important;height:100%!important;object-fit:contain!important;
+  width:100%!important;height:100%!important;object-fit:cover!important;
 }
 .bar #refresh {
   flex:0 0 60px!important;
@@ -276,7 +276,7 @@ header .header-actions #changeTeam .approved-puck-art {
 header .header-actions #changeTeam.team-switch {
  width:64px!important;height:64px!important;min-width:64px!important;min-height:64px!important;max-width:64px!important;max-height:64px!important;flex:0 0 64px!important;
 }
-header .header-actions #changeTeam img.approved-puck-art{display:block!important;width:100%!important;height:100%!important;object-fit:contain!important;filter:contrast(1.13) brightness(1.06)!important;}
+header .header-actions #changeTeam img.approved-puck-art{display:block!important;width:100%!important;height:100%!important;object-fit:cover!important;filter:contrast(1.13) brightness(1.06)!important;}
 @media(max-width:820px){header .header-actions #changeTeam.team-switch{width:60px!important;height:60px!important;min-width:60px!important;min-height:60px!important;max-width:60px!important;max-height:60px!important;flex-basis:60px!important;}}
 @media(max-width:560px){header .header-actions #changeTeam.team-switch{width:54px!important;height:54px!important;min-width:54px!important;min-height:54px!important;max-width:54px!important;max-height:54px!important;flex-basis:54px!important;}}
 </style>
@@ -317,7 +317,7 @@ header .header-actions .mark.nhl-shield-right:has(.kalpa-logo) {
 }
 header .header-actions .mark.nhl-shield-right img.kalpa-logo {
   display:block!important;width:100%!important;height:100%!important;
-  object-fit:contain!important;
+  object-fit:cover!important;
 }
 @media(max-width:560px){
  header .header-actions .mark.nhl-shield-right,
@@ -347,7 +347,7 @@ header .header-actions .mark.nhl-shield-right:has(.kalpa-logo) {
   display:flex!important;align-items:center!important;justify-content:center!important;
 }
 header .header-actions .mark.nhl-shield-right img.kalpa-logo {
-  width:100%!important;height:100%!important;object-fit:contain!important;
+  width:100%!important;height:100%!important;object-fit:cover!important;
   filter:drop-shadow(0 1px 1px rgba(255,255,255,.18));
 }
 @media(max-width:820px){
@@ -439,8 +439,8 @@ header .city-skyline {position:relative!important;display:block!important;visibi
  height:76px!important;min-height:76px!important;overflow:hidden!important;background:#16283c!important;}
 header .city-skyline-fallback,header .city-skyline-photo {
  width:100%!important;height:100%!important;display:block!important;visibility:visible!important;
- object-fit:cover!important;object-position:center bottom!important;
- background-size:cover!important;background-position:center bottom!important;opacity:1!important;
+ object-fit:cover!important;object-position:center center!important;
+ background-size:cover!important;background-position:center center!important;opacity:1!important;
 }
 header .city-skyline-photo[hidden]{display:none!important;}
 header .city-skyline-shade{opacity:.08!important;}
@@ -682,13 +682,13 @@ header .city-skyline{
 }
 header .city-skyline-photo,header .city-skyline .city-skyline-photo{
   width:100%!important;height:100%!important;
-  object-fit:contain!important;object-position:center center!important;
+  object-fit:cover!important;object-position:center center!important;
   filter:brightness(1.12) saturate(1.18)!important;
   opacity:1!important;visibility:visible!important;
   background:#07111c!important;
 }
 header .city-skyline-fallback{
-  background-size:contain!important;background-position:center!important;
+  background-size:cover!important;background-position:center!important;
   background-repeat:no-repeat!important;background-color:#07111c!important;
 }
 header .city-skyline-shade{
@@ -730,7 +730,7 @@ header .brand-heading #selectedTeamLogo.selected-team-logo,
 header .brand-heading #selectedTeamLogoFallback.selected-logo-fallback{
   width:clamp(37px,3.7vw,52px)!important;height:clamp(37px,3.7vw,52px)!important;
   min-width:0!important;max-width:none!important;max-height:none!important;
-  flex:0 0 clamp(37px,3.7vw,52px)!important;object-fit:contain!important;
+  flex:0 0 clamp(37px,3.7vw,52px)!important;object-fit:cover!important;
 }
 header .brand-heading #selectedTeamLogo[hidden]{display:none!important;}
 header .brand-heading #selectedTeamLogoFallback.selected-logo-fallback{display:inline-flex!important;align-items:center;justify-content:center;font-size:10px!important;}
@@ -758,7 +758,7 @@ header .brand-heading #selectedTeamLogoFallback.selected-logo-fallback{
   min-width:70px!important;min-height:70px!important;
   max-width:70px!important;max-height:70px!important;
   flex:0 0 70px!important;
-  object-fit:contain!important;object-position:center!important;
+  object-fit:cover!important;object-position:center!important;
   padding:0!important;margin:0!important;background:transparent!important;
   border:0!important;border-radius:0!important;
 }
@@ -807,8 +807,8 @@ header .brand-copy #siteSubtitle .team-news-line {font-weight:700!important;}
 
 <style id="nhl365-v036-integrated-all-32-cities">
 header .city-skyline {border:2px solid var(--team-primary,#317bda)!important;box-shadow:inset 0 0 0 1px var(--team-secondary,#a3c6ff),0 0 10px color-mix(in srgb,var(--team-primary,#317bda) 45%,transparent)!important;overflow:hidden!important;}
-header .city-skyline .city-skyline-photo {display:block!important;object-fit:contain!important;object-position:50% 50%!important;width:100%!important;height:100%!important;}
-header .city-skyline .city-skyline-fallback {background-size:contain!important;background-position:center center!important;}
+header .city-skyline .city-skyline-photo {display:block!important;object-fit:cover!important;object-position:50% 50%!important;width:100%!important;height:100%!important;}
+header .city-skyline .city-skyline-fallback {background-size:cover!important;background-position:center center!important;}
 header .city-skyline .city-skyline-name {font-family:system-ui,'Arial Black',sans-serif!important;font-style:normal!important;font-size:12px!important;font-weight:900!important;letter-spacing:.05em!important;color:#fff!important;text-shadow:0 2px 5px #000,0 0 10px #000!important;}
 @media(max-width:560px){header .city-skyline .city-skyline-name{font-size:11px!important;}}
 </style>
