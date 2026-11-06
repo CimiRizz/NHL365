@@ -327,6 +327,58 @@ header .header-actions .mark.nhl-shield-right img.kalpa-logo {
  }
 }
 </style>
+
+<style id="nhl365-v024-whiter-puck-and-matched-shield">
+/* v0.24: make Change Team puck brighter/whiter for mobile readability; enlarge NHL shield to the same footprint as the puck. */
+header .header-actions #changeTeam.team-switch {
+  width:64px!important;height:64px!important;min-width:64px!important;min-height:64px!important;
+  max-width:64px!important;max-height:64px!important;flex:0 0 64px!important;
+}
+header .header-actions #changeTeam img.approved-puck-art {
+  filter:brightness(1.22) contrast(1.26) saturate(.92)!important;
+}
+header .header-actions #changeTeam.team-switch::after {
+  opacity:.46!important;
+}
+header .header-actions .mark.nhl-shield-right,
+header .header-actions .mark.nhl-shield-right:has(.kalpa-logo) {
+  width:64px!important;height:64px!important;flex:0 0 64px!important;
+  min-width:64px!important;min-height:64px!important;max-width:64px!important;max-height:64px!important;
+  display:flex!important;align-items:center!important;justify-content:center!important;
+}
+header .header-actions .mark.nhl-shield-right img.kalpa-logo {
+  width:100%!important;height:100%!important;object-fit:contain!important;
+  filter:drop-shadow(0 1px 1px rgba(255,255,255,.18));
+}
+@media(max-width:820px){
+  header .header-actions #changeTeam.team-switch {
+    width:60px!important;height:60px!important;min-width:60px!important;min-height:60px!important;
+    max-width:60px!important;max-height:60px!important;flex-basis:60px!important;
+  }
+  header .header-actions .mark.nhl-shield-right,
+  header .header-actions .mark.nhl-shield-right:has(.kalpa-logo){
+    width:60px!important;height:60px!important;flex:0 0 60px!important;
+    min-width:60px!important;min-height:60px!important;max-width:60px!important;max-height:60px!important;
+  }
+}
+@media(max-width:560px){
+  header .header-actions #changeTeam.team-switch {
+    width:54px!important;height:54px!important;min-width:54px!important;min-height:54px!important;
+    max-width:54px!important;max-height:54px!important;flex-basis:54px!important;
+  }
+  header .header-actions #changeTeam img.approved-puck-art {
+    filter:brightness(1.27) contrast(1.32) saturate(.9)!important;
+  }
+  header .header-actions #changeTeam.team-switch::after {
+    opacity:.38!important;
+  }
+  header .header-actions .mark.nhl-shield-right,
+  header .header-actions .mark.nhl-shield-right:has(.kalpa-logo){
+    width:54px!important;height:54px!important;flex:0 0 54px!important;
+    min-width:54px!important;min-height:54px!important;max-width:54px!important;max-height:54px!important;
+  }
+}
+</style>
 </head><body><div id="teamSelector" class="team-selector" role="dialog" aria-modal="true" aria-labelledby="teamSelectTitle" hidden>
 <div class="team-select-panel"><h2 id="teamSelectTitle">NHL365</h2><p>Choose your NHL team</p><div id="teamChoices" class="team-choices"></div><p class="team-choice-note">Your selection is saved in this browser. You can change teams anytime.</p></div></div>
 <style>
