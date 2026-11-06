@@ -1,27 +1,16 @@
-# NHL365 v0.3 – SVG-logot ja Utah Mammoth
+# NHL365 v0.4 – English interface and higher-contrast logos
 
-Perustuu NHL365 v0.2:een. Tämä on NHL365:n **oma** projekti, ei muuta KalPa365:ttä tai Liiga365:tä.
+Based on NHL365 v0.3. NHL365 remains a separate repository from Liiga365 and KalPa365.
 
-## Päivitys v0.2 -> v0.3
+## Updates
+- Translated the entire visible web interface (team picker, next games, news, filters, reading dialog, errors and buttons) into English.
+- Tampa Bay Lightning and Toronto Maple Leafs use NHL SVG `_light` variants on light cards (instead of white-on-white `_dark` artwork).
+- Added a subtle pale-blue backing behind those two logos to maintain contrast.
+- Dark header retains the `_dark` variant, which is suitable on black backgrounds.
+- Same SVG -> bundled PNG -> abbreviation fallback as v0.3.
+- No changes to news retrieval, schedule retrieval, team storage, or card layout.
 
-- NHL:n joukkueiden SVG-logot ladataan suoraan NHL:n kuvapalvelimelta `https://assets.nhle.com/logos/nhl/svg/`.
-- Utah Mammoth käyttää tunnusta `UTA`, eikä vanhaa Arizona Coyotes -logoa käytetä.
-- Virallisia SVG-logoja käytetään joukkuevalinnassa, ottelukorteissa ja valitun joukkueen otsakelogossa; NHL-kilvelle on oma SVG-osoite.
-- Jos SVG ei lataudu, sovellus kokeilee paikallista PNG:tä (Utahille ei ole PNG-varalogoja); jos sekään ei lataudu, näytetään joukkuekoodi.
-- `logos/`-kansio on mukana vain varakuvia varten. Joukkueen teksti näkyy silloinkin, kun kuvat eivät lataudu.
-- Ei muutoksia uutis- tai ottelurajapintaan.
+## Install
+Upload `index.html` to your NHL365 GitHub repository, replacing the previous file. Other files are included so this archive can also be used for a fresh deployment. Render start command: `python NHL365_palvelin.py`. Hard refresh with Ctrl+F5.
 
-## Asennus GitHub / Render
-
-Lataa kaikki tämän ZIPin tiedostot **NHL365-repositorion juureen**. Korvaa `index.html`, pidä `NHL365_palvelin.py` ja `logos/` mukana. Renderin asetukset:
-
-- Build: `pip install -r requirements.txt`
-- Start: `python NHL365_palvelin.py`
-
-Päivitä selaimessa Ctrl+F5. Testaa joukkuevalinnassa Utah Mammoth, Toronto ja Boston sekä seuraavien ottelujen logot.
-
-## Kuvalähteet ja rajoitus
-
-SVG:tä ei voitu ladata testikoneeseen verkkoyhteyden rajoituksen vuoksi. Koodi käyttää NHL:n julkisesti dokumentoitua SVG-osoitemallia, mutta kaikkien 32 tiedoston Render-/selaintoimivuutta ei ole vahvistettu. Fallback on tämän vuoksi mukana.
-
-Tunnukset ja joukkueiden logot ovat NHL:n ja seurojen tavaramerkkejä; julkisen palvelun käyttöoikeudet on syytä selvittää.
+NHL brand assets belong to NHL and the teams. SVG reachability and exact styling should be confirmed in the deployed browser.
