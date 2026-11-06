@@ -15,6 +15,7 @@
 .choice-logo-fallback{width:40px;height:40px;display:grid;place-items:center;font-weight:800;font-size:10px;color:#4b6258;flex:none}
 @media(max-width:600px){.selected-team-logo{width:42px;height:42px}.choice-logo,.choice-logo-fallback{width:33px;height:33px}}
 .logo-text-fallback,.selected-logo-fallback{display:inline-flex;align-items:center;justify-content:center;min-width:55px;height:55px;color:white;font-weight:800;font-size:13px}.logo-text-fallback{width:70px;height:70px}.selected-logo-fallback{min-width:56px}
+
 </style></head><body><div id="teamSelector" class="team-selector" role="dialog" aria-modal="true" aria-labelledby="teamSelectTitle" hidden>
 <div class="team-select-panel"><h2 id="teamSelectTitle">NHL365</h2><p>Choose your NHL team</p><div id="teamChoices" class="team-choices"></div><p class="team-choice-note">Your selection is saved in this browser. You can change teams anytime.</p></div></div>
 <style>
@@ -27,8 +28,58 @@
 .team-choice-note{font-size:12px}.team-switch{margin-left:auto;background:#254437;border:1px solid #54796a;padding:9px 12px;font-size:13px}
 @media(max-width:600px){.team-choices{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style>
+<style>
+/* NHL365 v0.6 — Team Colors. Neutral dark surfaces + team-specific accents. */
+:root{
+ color-scheme:dark;
+ --team-primary:#317bda;--team-secondary:#9fc9ff;--team-contrast:#fff;
+ --background:#0a101a;--panel:#121d2d;--panel-raised:#192638;
+ --border:#2b3a4d;--copy:#f1f5fa;--muted:#b3c1d1;
+ background:var(--background);color:var(--copy)
+}
+body{background:var(--background);color:var(--copy);min-height:100vh}
+header{background:linear-gradient(115deg,#070e18 0%,#111e30 100%);border-bottom:4px solid var(--team-primary);box-shadow:0 10px 45px #0005;position:relative}
+header:after{content:'';position:absolute;bottom:0;left:0;width:min(28%,280px);height:4px;background:var(--team-secondary)}
+.brand h1,.matches h2,.latest-news h2{color:var(--copy)}
+.brand p{color:var(--muted)}
+.selected-team-logo{filter:drop-shadow(0 3px 12px #0008)}
+main{color:var(--copy)}
+.matches h2,.latest-news h2{border-left:4px solid var(--team-primary);padding-left:11px}
+.match,.item,.empty{background:var(--panel);color:var(--copy);border:1px solid var(--border);box-shadow:0 10px 28px #02061150}
+.match{border-top:3px solid var(--team-primary)}
+.match-date,.source{color:var(--team-secondary)}
+.match-location,.matches-note,.summary,.note,footer,.item p,.item .bottom,.reader-meta,.reader-notice{color:var(--muted)}
+.match-dash{color:var(--muted)}
+.item{border-top:3px solid var(--team-primary);transition:transform .15s,border-color .15s}
+.item:hover,.match:hover{border-color:var(--team-secondary)}
+.item:hover{transform:translateY(-2px)}
+.item h2,.item h2 button{color:var(--copy)}
+.item .bottom a,.item .bottom button{color:var(--team-secondary)}
+.bar input,.bar select{background:var(--panel);color:var(--copy);border-color:var(--border)}
+.bar input::placeholder{color:#a5b5c6}
+.bar input:focus-visible,.bar select:focus-visible,.team-choices button:focus-visible{outline:3px solid var(--team-secondary);outline-offset:2px}
+button{background:var(--team-primary);color:var(--team-contrast)}
+button:hover{background:var(--team-secondary);color:#06101d}
+button:disabled{opacity:.55;cursor:wait}
+.team-switch{background:transparent;border:1px solid var(--team-secondary);color:var(--copy)}
+.team-switch:hover{background:var(--team-primary);color:var(--team-contrast)}
+.reader-overlay{background:#03070fdb}
+.reader{background:var(--panel);color:var(--copy);border:1px solid var(--border)}
+.reader h2{color:var(--copy)}.reader-link{background:var(--team-primary);color:var(--team-contrast)}
+.reader-close{background:var(--team-primary);color:var(--team-contrast)}
+.team-selector:not([hidden]){background:#040914eb}
+.team-select-panel{background:var(--panel);border:1px solid var(--border);box-shadow:0 24px 75px #000a}
+.team-select-panel h2{color:var(--copy)}.team-select-panel p,.team-choice-note{color:var(--muted)}
+.team-choices button{background:var(--panel-raised);color:var(--copy);border:1px solid var(--border)}
+.team-choices button:hover,.team-choices button:focus{background:var(--team-primary);color:var(--team-contrast);border-color:var(--team-secondary)}
+.team-choices button[data-team="selected"]{border-color:var(--team-secondary)}
+.team-logo,.choice-logo{background:#eef3fa;border-radius:9px;padding:3px}
+.team-logo-fallback,.choice-logo-fallback{background:#24354a;color:#fff;border-color:var(--border)}
+@media(prefers-reduced-motion:reduce){.item{transition:none}.item:hover{transform:none}}
+
+</style>
 <header><div class="brand"><div class="mark"><img class="kalpa-logo" src="https://assets.nhle.com/logos/nhl/svg/NHL_light.svg" alt="NHL logo" data-logo-key="NHL" data-logo-theme="light" width="70" height="76"></div><img id="selectedTeamLogo" class="selected-team-logo" src="" alt="" hidden><div><h1 id="siteName">NHL365</h1><p id="siteSubtitle">Choose a team to follow.</p></div><button class="team-switch" id="changeTeam" type="button">Change team</button></div></header>
-<main><section class="matches" aria-label="Next three games for the selected team"><h2>Next 3 games</h2><div class="matches-grid" id="nextMatches"><div class="match">Loading games…</div></div><p class="matches-note">Game data: NHL public schedule API (2026–27 season). Check the official schedule for changes.</p></section><section class="latest-news" aria-label="Three latest team news stories"><h2>3 latest news stories</h2><div id="latestGrid" class="grid"><div class="empty">Loading the latest news…</div></div></section><div class="bar"><input id="search" type="search" placeholder="Search team news…" aria-label="Search news"><select id="source" aria-label="News source"><option value="">All news sources</option></select><button id="refresh">↻ Refresh news</button></div><div id="status" class="summary" role="status">Loading team news…</div><div id="grid" class="grid"></div><p class="note">NHL365 collects headlines and links from publicly accessible news feeds. Stories open in NHL365’s distraction-free reader, with an option to view the original publisher’s page. Availability varies by source; some articles may be behind a paywall. This is an independent fan service, not affiliated with the NHL or its teams.</p></main><div id="readerOverlay" class="reader-overlay" role="dialog" aria-modal="true" aria-labelledby="readerTitle" aria-hidden="true"><div class="reader"><button id="readerClose" class="reader-close" aria-label="Close reader">✕</button><div id="readerMeta" class="reader-meta"></div><h2 id="readerTitle"></h2><div id="readerText"></div><a id="readerOriginal" class="reader-link" target="_blank" rel="noopener noreferrer">Open original article ↗</a><p class="reader-notice">NHL365 attempts to show publicly available article text without cookie pop-ups. If the full text is unavailable, a summary or headline is shown instead.</p></div></div><footer>NHL365 · development version 0.5 · feature/nhl365</footer>
+<main><section class="matches" aria-label="Next three games for the selected team"><h2>Next 3 games</h2><div class="matches-grid" id="nextMatches"><div class="match">Loading games…</div></div><p class="matches-note">Game data: NHL public schedule API (2026–27 season). Check the official schedule for changes.</p></section><section class="latest-news" aria-label="Three latest team news stories"><h2>3 latest news stories</h2><div id="latestGrid" class="grid"><div class="empty">Loading the latest news…</div></div></section><div class="bar"><input id="search" type="search" placeholder="Search team news…" aria-label="Search news"><select id="source" aria-label="News source"><option value="">All news sources</option></select><button id="refresh">↻ Refresh news</button></div><div id="status" class="summary" role="status">Loading team news…</div><div id="grid" class="grid"></div><p class="note">NHL365 collects headlines and links from publicly accessible news feeds. Stories open in NHL365’s distraction-free reader, with an option to view the original publisher’s page. Availability varies by source; some articles may be behind a paywall. This is an independent fan service, not affiliated with the NHL or its teams.</p></main><div id="readerOverlay" class="reader-overlay" role="dialog" aria-modal="true" aria-labelledby="readerTitle" aria-hidden="true"><div class="reader"><button id="readerClose" class="reader-close" aria-label="Close reader">✕</button><div id="readerMeta" class="reader-meta"></div><h2 id="readerTitle"></h2><div id="readerText"></div><a id="readerOriginal" class="reader-link" target="_blank" rel="noopener noreferrer">Open original article ↗</a><p class="reader-notice">NHL365 attempts to show publicly available article text without cookie pop-ups. If the full text is unavailable, a summary or headline is shown instead.</p></div></div><footer>NHL365 · development version 0.6 · feature/nhl365</footer>
 <script>
 const $=id=>document.getElementById(id);let selectedTeam=null;let articles=[];let lastUpdate='';let readerLastFocus=null;
 // v0.7: Cache only the three newest articles per club in this browser.
@@ -193,10 +244,36 @@ async function loadMatches(){
 
 const NHL_TEAMS=[["ana", "Anaheim Ducks"], ["bos", "Boston Bruins"], ["buf", "Buffalo Sabres"], ["car", "Carolina Hurricanes"], ["cbj", "Columbus Blue Jackets"], ["cgy", "Calgary Flames"], ["chi", "Chicago Blackhawks"], ["col", "Colorado Avalanche"], ["dal", "Dallas Stars"], ["det", "Detroit Red Wings"], ["edm", "Edmonton Oilers"], ["fla", "Florida Panthers"], ["lak", "Los Angeles Kings"], ["min", "Minnesota Wild"], ["mtl", "Montreal Canadiens"], ["njd", "New Jersey Devils"], ["nsh", "Nashville Predators"], ["nyi", "New York Islanders"], ["nyr", "New York Rangers"], ["ott", "Ottawa Senators"], ["phi", "Philadelphia Flyers"], ["pit", "Pittsburgh Penguins"], ["sea", "Seattle Kraken"], ["sjs", "San Jose Sharks"], ["stl", "St. Louis Blues"], ["tbl", "Tampa Bay Lightning"], ["tor", "Toronto Maple Leafs"], ["uta", "Utah Mammoth"], ["van", "Vancouver Canucks"], ["vgk", "Vegas Golden Knights"], ["wpg", "Winnipeg Jets"], ["wsh", "Washington Capitals"]];
 const TEAM_LABELS=Object.fromEntries(NHL_TEAMS);
+
+// NHL365 v0.6 Team Colors: presentation-only palette; never alters API data.
+const TEAM_COLOR_PALETTE={
+ ana:['#bc622d','#f6c39a'],bos:['#a97911','#ffd16b'],buf:['#1450a2','#ffcc4d'],
+ car:['#bd1e3a','#ff8c96'],cbj:['#2455a4','#db6e87'],cgy:['#c7272b','#ffc46a'],
+ chi:['#bc2734','#e6bd76'],col:['#823151','#b6c9e9'],dal:['#087c5c','#90e4b9'],
+ det:['#c62434','#ff8790'],edm:['#c95318','#ffb57c'],fla:['#ad2038','#ffb19b'],
+ lak:['#5b748f','#d7e3f0'],min:['#176b4e','#e7b46f'],mtl:['#bd2839','#9bbef9'],
+ njd:['#bd213c','#ff98a7'],nsh:['#a88419','#ffda61'],nyi:['#1460b0','#fdad6a'],
+ nyr:['#1955b4','#e88e96'],ott:['#9b1f36','#e4bb78'],phi:['#c14d20','#ffb175'],
+ pit:['#ab851b','#ffdc77'],sea:['#167e90','#a0e4ec'],sjs:['#087e87','#98e3de'],
+ stl:['#245ca2','#f4d176'],tbl:['#2263b7','#aacdf7'],tor:['#245db5','#a3c6ff'],
+ uta:['#267fbc','#9ddcf9'],van:['#1d7191','#9bd0ad'],vgk:['#a58c42','#f8d980'],
+ wpg:['#315c91','#a4cbef'],wsh:['#b5223c','#a0bde9']
+};
+function applyTeamColors(id){
+ const [primary,secondary]=TEAM_COLOR_PALETTE[id]||['#317bda','#9fc9ff'];
+ const root=document.documentElement;
+ root.style.setProperty('--team-primary',primary);
+ root.style.setProperty('--team-secondary',secondary);
+ // Chosen accents are dark enough for white text in buttons and colored panels.
+ root.style.setProperty('--team-contrast','#ffffff');
+ document.querySelector('meta[name="theme-color"]')?.setAttribute('content',primary);
+}
+
 function showTeamSelector(){ $('teamSelector').hidden=false; }
 function setTeam(id){
  if(!TEAM_LABELS[id]) return;
  selectedTeam=id;
+ applyTeamColors(id);
  try{localStorage.setItem('nhl365-team',id)}catch(e){}
  $('teamSelector').hidden=true;
  $('siteName').textContent='NHL365';
