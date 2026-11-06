@@ -721,6 +721,27 @@ header .city-skyline-credit{display:none!important}
  header .city-skyline-name{font-size:12px!important;padding:2px 7px!important;}
 }
 </style>
+
+<style id="nhl365-v033-team-logo-height">
+/* Team logo immediately after NHL365, matching the wordmark height. */
+header .brand-heading{display:flex!important;align-items:center!important;justify-content:flex-start!important;gap:9px!important;min-width:0!important;}
+header .brand-heading h1#siteName{flex:0 0 auto!important;}
+header .brand-heading #selectedTeamLogo.selected-team-logo,
+header .brand-heading #selectedTeamLogoFallback.selected-logo-fallback{
+  width:clamp(37px,3.7vw,52px)!important;height:clamp(37px,3.7vw,52px)!important;
+  min-width:0!important;max-width:none!important;max-height:none!important;
+  flex:0 0 clamp(37px,3.7vw,52px)!important;object-fit:contain!important;
+}
+header .brand-heading #selectedTeamLogo[hidden]{display:none!important;}
+header .brand-heading #selectedTeamLogoFallback.selected-logo-fallback{display:inline-flex!important;align-items:center;justify-content:center;font-size:10px!important;}
+@media(max-width:560px){
+ header .brand-heading{gap:6px!important;}
+ header .brand-heading #selectedTeamLogo.selected-team-logo,
+ header .brand-heading #selectedTeamLogoFallback.selected-logo-fallback{
+  width:32px!important;height:32px!important;flex-basis:32px!important;
+ }
+}
+</style>
 </head><body><div id="teamSelector" class="team-selector" role="dialog" aria-modal="true" aria-labelledby="teamSelectTitle" hidden>
 <div class="team-select-panel"><h2 id="teamSelectTitle">NHL365</h2><p>Choose your NHL team</p><div id="teamChoices" class="team-choices"></div><p class="team-choice-note">Your selection is saved in this browser. You can change teams anytime.</p></div></div>
 <style>
