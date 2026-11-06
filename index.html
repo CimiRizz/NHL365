@@ -306,6 +306,27 @@ header .header-actions #changeTeam.team-switch::after {
 }
 header .header-actions #changeTeam img.approved-puck-art{position:relative!important;z-index:1!important;}
 </style>
+
+<style id="nhl365-v023-complete-puck-and-shield">
+/* Preserve the approved puck image and size, recolor its pale floor reflection dynamically. */
+/* NHL shield is enlarged slightly while retaining the right-hand position before Change Team. */
+header .header-actions .mark.nhl-shield-right,
+header .header-actions .mark.nhl-shield-right:has(.kalpa-logo) {
+  width:58px!important;height:64px!important;flex:0 0 58px!important;
+  min-width:58px!important;min-height:64px!important;
+}
+header .header-actions .mark.nhl-shield-right img.kalpa-logo {
+  display:block!important;width:100%!important;height:100%!important;
+  object-fit:contain!important;
+}
+@media(max-width:560px){
+ header .header-actions .mark.nhl-shield-right,
+ header .header-actions .mark.nhl-shield-right:has(.kalpa-logo){
+   width:44px!important;height:50px!important;flex:0 0 44px!important;
+   min-width:44px!important;min-height:50px!important;
+ }
+}
+</style>
 </head><body><div id="teamSelector" class="team-selector" role="dialog" aria-modal="true" aria-labelledby="teamSelectTitle" hidden>
 <div class="team-select-panel"><h2 id="teamSelectTitle">NHL365</h2><p>Choose your NHL team</p><div id="teamChoices" class="team-choices"></div><p class="team-choice-note">Your selection is saved in this browser. You can change teams anytime.</p></div></div>
 <style>
@@ -808,4 +829,57 @@ let savedTeam=null;try{savedTeam=localStorage.getItem('nhl365-team')}catch(e){}
 if(savedTeam&&TEAM_LABELS[savedTeam])setTeam(savedTeam);else showTeamSelector();
 
 setInterval(()=>{if(selectedTeam)loadMatches()},15000);
-</script></body></html>
+</script>
+<script id="nhl365-v023-reflection-tint">
+/* Tint the previously pale reflection BELOW the puck, not its white CHANGE/TEAM lettering.
+   A single embedded puck asset is used for all teams, with team color read from existing CSS. */
+(() => {
+ const art=document.querySelector('#changeTeam img.approved-puck-art');
+ if(!art) return;
+ const originalSrc=art.getAttribute('src');
+ if(!originalSrc) return;
+ const source=new Image();
+ let ready=false, lastColor='';
+ const canvas=document.createElement('canvas');
+ const ctx=canvas.getContext('2d',{willReadFrequently:true});
+ if(!ctx) return;
+ function tintReflection(){
+   if(!ready) return;
+   const color=getComputedStyle(document.documentElement).getPropertyValue('--team-primary').trim()||'#317bda';
+   if(color===lastColor) return;
+   const match=/^#([0-9a-f]{6})$/i.exec(color);
+   if(!match) return;
+   const n=parseInt(match[1],16), tint=[(n>>16)&255,(n>>8)&255,n&255];
+   canvas.width=source.naturalWidth;canvas.height=source.naturalHeight;
+   ctx.clearRect(0,0,canvas.width,canvas.height);
+   ctx.drawImage(source,0,0);
+   const pixels=ctx.getImageData(0,0,canvas.width,canvas.height);
+   const d=pixels.data,w=canvas.width,h=canvas.height;
+   for(let y=Math.floor(h*.76);y<h;y++){
+     for(let x=0;x<w;x++){
+       const p=(y*w+x)*4;
+       if(d[p+3]<12)continue;
+       const r=d[p],g=d[p+1],b=d[p+2];
+       const lum=(r+g+b)/3;
+       // Pale, neutral ground reflection; exclude the puck's dark rubber and colored elements.
+       if(lum<108 || Math.max(r,g,b)-Math.min(r,g,b)>28)continue;
+       const strength=Math.min(.91,Math.max(0,(lum-108)/85));
+       for(let c=0;c<3;c++){
+         // Keep the original light/shadow gradients while replacing neutral white with team color.
+         const colored=Math.min(255,tint[c]*.84+lum*.16);
+         d[p+c]=Math.round(d[p+c]*(1-strength)+colored*strength);
+       }
+     }
+   }
+   ctx.putImageData(pixels,0,0);
+   art.src=canvas.toDataURL('image/png');
+   lastColor=color;
+ }
+ source.onload=()=>{ready=true;tintReflection();};
+ source.onerror=()=>{}; // Keep existing working image on failure.
+ source.src=originalSrc;
+ const observer=new MutationObserver(()=>tintReflection());
+ observer.observe(document.documentElement,{attributes:true,attributeFilter:['style']});
+})();
+</script>
+</body></html>
