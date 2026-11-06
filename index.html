@@ -804,6 +804,14 @@ header .brand-copy #siteSubtitle .team-news-line {font-weight:700!important;}
  header .brand-copy #siteSubtitle .team-news-line {font-size:12px!important;}
 }
 </style>
+
+<style id="nhl365-v036-integrated-all-32-cities">
+header .city-skyline {border:2px solid var(--team-primary,#317bda)!important;box-shadow:inset 0 0 0 1px var(--team-secondary,#a3c6ff),0 0 10px color-mix(in srgb,var(--team-primary,#317bda) 45%,transparent)!important;overflow:hidden!important;}
+header .city-skyline .city-skyline-photo {display:block!important;object-fit:contain!important;object-position:50% 50%!important;width:100%!important;height:100%!important;}
+header .city-skyline .city-skyline-fallback {background-size:contain!important;background-position:center center!important;}
+header .city-skyline .city-skyline-name {font-family:system-ui,'Arial Black',sans-serif!important;font-style:normal!important;font-size:12px!important;font-weight:900!important;letter-spacing:.05em!important;color:#fff!important;text-shadow:0 2px 5px #000,0 0 10px #000!important;}
+@media(max-width:560px){header .city-skyline .city-skyline-name{font-size:11px!important;}}
+</style>
 </head><body><div id="teamSelector" class="team-selector" role="dialog" aria-modal="true" aria-labelledby="teamSelectTitle" hidden>
 <div class="team-select-panel"><h2 id="teamSelectTitle">NHL365</h2><p>Choose your NHL team</p><div id="teamChoices" class="team-choices"></div><p class="team-choice-note">Your selection is saved in this browser. You can change teams anytime.</p></div></div>
 <style>
@@ -1263,14 +1271,14 @@ function setCitySkyline(team){
  const variant=nextSkylineVariant(team);
  const skylineKey=team+'-'+variant;
  frame.dataset.skylineVariant=String(variant);
- const localAi=CITY_EDITION_AI_PANORAMAS[skylineKey];
+ const localAi='/static/cities/'+skylineKey+'.webp';
  const previous=SKYLINE_EMBEDDED_WEBP[skylineKey];
  const source=localAi || (previous?'data:image/webp;base64,'+previous:'');
  frame.dataset.aiPanorama=localAi?'true':'false';
  // Immediate local rendering, no external network, no asynchronous photo lookup.
  fallback.style.backgroundImage=source?'url("'+source+'")':skylineArt(team);
  img.onload=null;
- img.onerror=()=>{if(team===selectedTeam){img.hidden=true;img.classList.remove('loaded')}};
+ img.onerror=()=>{if(team===selectedTeam){const fallbackPhoto=CITY_EDITION_AI_PANORAMAS[skylineKey]||(SKYLINE_EMBEDDED_WEBP[skylineKey]?'data:image/webp;base64,'+SKYLINE_EMBEDDED_WEBP[skylineKey]:'');if(fallbackPhoto&&img.src!==fallbackPhoto){img.onerror=null;img.src=fallbackPhoto;img.hidden=false;img.classList.add('loaded');}else{img.hidden=true;img.classList.remove('loaded')}}};
  if(source){
    img.src=source;
    img.hidden=false;

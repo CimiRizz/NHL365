@@ -314,12 +314,11 @@ class Handler(BaseHTTPRequestHandler):
         path=parsed.path
         if path in ('/','/index.html'):
             body=(ROOT/'index.html').read_bytes();typ='text/html; charset=utf-8'
-        elif path.startswith('/static/skylines/'):
-            # Whitelisted static WebP assets, stored with the application on Render.
-            filename=path[len('/static/skylines/'):]
-            if not re.fullmatch(r'[a-z]{3}-[123]\.webp', filename) or filename[:3] not in TEAMS:
+        elif path.startswith('/static/cities/'):
+            filename=path.removeprefix('/static/cities/')
+            if not re.fullmatch(r'[a-z]{3}-(?:1|2|3)\.webp', filename):
                 self.send_error(404);return
-            asset=ROOT/'static'/'skylines'/filename
+            asset=ROOT/'static'/'cities'/filename
             if not asset.is_file():
                 self.send_error(404);return
             body=asset.read_bytes();typ='image/webp'
@@ -351,7 +350,7 @@ class Handler(BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header('Content-Type',typ)
         self.send_header('Content-Length',str(len(body)))
-        self.send_header('Cache-Control', 'no-store' if path.startswith('/api/') else ('public, max-age=86400' if path.startswith('/static/skylines/') else 'public, max-age=60'))
+        self.send_header('Cache-Control','no-store' if path.startswith('/api/') else 'public, max-age=60')
         self.end_headers()
         self.wfile.write(body)
 
