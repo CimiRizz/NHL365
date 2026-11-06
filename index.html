@@ -223,6 +223,53 @@ header .header-actions #changeTeam.team-switch:focus-visible {outline:3px solid 
  header .header-actions #changeTeam.team-switch,.bar #refresh {transition:none!important;}
 }
 </style>
+
+<style id="nhl365-v020-compact-pucks">
+/* Smaller puck artwork and a more pronounced gap between NHL shield and Change Team. */
+header .header-actions { column-gap: 8px !important; }
+header .header-actions #changeTeam.team-switch {
+  width:76px!important;height:76px!important;
+  min-width:76px!important;min-height:76px!important;
+  max-width:76px!important;max-height:76px!important;
+  flex:0 0 76px!important;
+  margin-left:24px!important;
+}
+header .header-actions #changeTeam .approved-puck-art {
+  width:100%!important;height:100%!important;object-fit:contain!important;
+}
+.bar #refresh {
+  flex:0 0 60px!important;
+  width:60px!important;height:60px!important;
+  min-width:60px!important;min-height:60px!important;
+  max-width:60px!important;max-height:60px!important;
+}
+.bar #refresh .refresh-puck-label {font-size:8px!important;letter-spacing:.1px!important;gap:1px!important;}
+.bar #refresh .refresh-puck-label span:last-child {font-size:10px!important;}
+@media (max-width:820px) {
+ header .header-actions #changeTeam.team-switch {
+   width:68px!important;height:68px!important;
+   min-width:68px!important;min-height:68px!important;
+   max-width:68px!important;max-height:68px!important;
+   flex-basis:68px!important;margin-left:18px!important;
+ }
+}
+@media (max-width:560px) {
+ header .header-actions #changeTeam.team-switch {
+   width:62px!important;height:62px!important;
+   min-width:62px!important;min-height:62px!important;
+   max-width:62px!important;max-height:62px!important;
+   flex-basis:62px!important;margin-left:14px!important;
+ }
+ .bar #refresh {
+   flex-basis:54px!important;
+   width:54px!important;height:54px!important;
+   min-width:54px!important;min-height:54px!important;
+   max-width:54px!important;max-height:54px!important;
+ }
+ .bar #refresh .refresh-puck-label {font-size:7px!important;}
+ .bar #refresh .refresh-puck-label span:last-child {font-size:9px!important;}
+}
+</style>
 </head><body><div id="teamSelector" class="team-selector" role="dialog" aria-modal="true" aria-labelledby="teamSelectTitle" hidden>
 <div class="team-select-panel"><h2 id="teamSelectTitle">NHL365</h2><p>Choose your NHL team</p><div id="teamChoices" class="team-choices"></div><p class="team-choice-note">Your selection is saved in this browser. You can change teams anytime.</p></div></div>
 <style>
