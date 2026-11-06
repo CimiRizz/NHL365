@@ -1,1 +1,1 @@
-# NHL365 v0.1 uses only Python standard library
+beautifulsoup4>=4.12,<5
