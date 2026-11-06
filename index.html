@@ -825,6 +825,15 @@ header .city-skyline-photo.loaded {
 }
 header .city-skyline-fallback {background-image:none!important;}
 </style>
+
+<style id="nhl365-v040-panorama-consistency">
+/* Identical visible photo geometry regardless of team image content. */
+header .city-skyline {position:relative!important;overflow:hidden!important;min-height:90px!important;height:110px!important;max-height:110px!important;}
+header .city-skyline-photo,header .city-skyline-photo.loaded{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;object-fit:cover!important;object-position:50% 50%!important;display:block!important;}
+header .city-skyline-fallback{background-size:cover!important;}
+@media(max-width:820px){header .city-skyline{height:90px!important;max-height:90px!important;min-height:90px!important;}}
+@media(max-width:560px){header .city-skyline{height:78px!important;max-height:78px!important;min-height:78px!important;}}
+</style>
 </head><body><div id="teamSelector" class="team-selector" role="dialog" aria-modal="true" aria-labelledby="teamSelectTitle" hidden>
 <div class="team-select-panel"><h2 id="teamSelectTitle">NHL365</h2><p>Choose your NHL team</p><div id="teamChoices" class="team-choices"></div><p class="team-choice-note">Your selection is saved in this browser. You can change teams anytime.</p></div></div>
 <style>
@@ -1252,7 +1261,7 @@ function setCitySkyline(team){
  credit.removeAttribute('href');
  credit.textContent='';
  // One image per team. No rotation or remote image searches.
- const localPhoto='/static/cities/'+team+'-1.webp';
+ const localPhoto='/static/cities/'+team+'-1.webp?v=041';
  frame.dataset.skylineVariant='1';
  frame.dataset.aiPanorama='true';
  fallback.style.backgroundImage='none';
