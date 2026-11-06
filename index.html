@@ -791,6 +791,19 @@ header .brand-heading #selectedTeamLogoFallback.selected-logo-fallback[hidden]{d
   }
 }
 </style>
+<style id="nhl365-v035-two-line-team-title">
+/* Team title is always exactly two lines, regardless of desktop/mobile width. */
+header .brand-copy #siteSubtitle {display:block!important;white-space:normal!important;line-height:1.2!important;}
+header .brand-copy #siteSubtitle .team-name-line,
+header .brand-copy #siteSubtitle .team-news-line {display:block!important;white-space:nowrap!important;}
+header .brand-copy #siteSubtitle .team-name-line {font-weight:900!important;overflow:hidden;text-overflow:ellipsis;}
+header .brand-copy #siteSubtitle .team-news-line {font-weight:700!important;}
+@media(max-width:560px){
+ header .brand-copy #siteSubtitle {max-width:none!important;}
+ header .brand-copy #siteSubtitle .team-name-line {font-size:clamp(11px,3.4vw,13px)!important;}
+ header .brand-copy #siteSubtitle .team-news-line {font-size:12px!important;}
+}
+</style>
 </head><body><div id="teamSelector" class="team-selector" role="dialog" aria-modal="true" aria-labelledby="teamSelectTitle" hidden>
 <div class="team-select-panel"><h2 id="teamSelectTitle">NHL365</h2><p>Choose your NHL team</p><div id="teamChoices" class="team-choices"></div><p class="team-choice-note">Your selection is saved in this browser. You can change teams anytime.</p></div></div>
 <style>
@@ -1279,7 +1292,14 @@ function setTeam(id){
  try{localStorage.setItem('nhl365-team',id)}catch(e){}
  $('teamSelector').hidden=true;
  $('siteName').textContent='NHL365';
- $('siteSubtitle').textContent=TEAM_LABELS[id]+' – games and news';
+ const subtitle=$('siteSubtitle');
+ const firstLine=document.createElement('span');
+ firstLine.className='team-name-line';
+ firstLine.textContent=TEAM_LABELS[id];
+ const secondLine=document.createElement('span');
+ secondLine.className='team-news-line';
+ secondLine.textContent='Games and news';
+ subtitle.replaceChildren(firstLine,secondLine);
  const chosenLogo=$('selectedTeamLogo');
  $('selectedTeamLogoFallback')?.remove();
  if(chosenLogo){
