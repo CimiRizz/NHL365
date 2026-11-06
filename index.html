@@ -742,6 +742,55 @@ header .brand-heading #selectedTeamLogoFallback.selected-logo-fallback{display:i
  }
 }
 </style>
+
+<style id="nhl365-v034-matching-visible-logo-height">
+/* All 32 teams / all panorama variants: keep the live team logo directly
+   after NHL365 in the header and compensate for empty margins within SVG logos.
+   Preserve aspect ratio, color, and click behavior. */
+header .brand-heading{display:flex!important;align-items:center!important;
+  justify-content:flex-start!important;gap:8px!important;white-space:nowrap!important;
+  overflow:visible!important;}
+header .brand-heading h1#siteName{flex:0 0 auto!important;white-space:nowrap!important;}
+header .brand-heading #selectedTeamLogo.selected-team-logo,
+header .brand-heading #selectedTeamLogoFallback.selected-logo-fallback{
+  display:block!important;
+  width:70px!important;height:70px!important;
+  min-width:70px!important;min-height:70px!important;
+  max-width:70px!important;max-height:70px!important;
+  flex:0 0 70px!important;
+  object-fit:contain!important;object-position:center!important;
+  padding:0!important;margin:0!important;background:transparent!important;
+  border:0!important;border-radius:0!important;
+}
+header .brand-heading #selectedTeamLogo[hidden]{display:none!important;}
+header .brand-heading #selectedTeamLogoFallback.selected-logo-fallback{
+  display:inline-flex!important;align-items:center!important;justify-content:center!important;
+  font-size:11px!important;
+}
+header .brand-heading #selectedTeamLogoFallback.selected-logo-fallback[hidden]{display:none!important;}
+@media(max-width:1000px){
+  header .brand-heading #selectedTeamLogo.selected-team-logo,
+  header .brand-heading #selectedTeamLogoFallback.selected-logo-fallback{
+    width:61px!important;height:61px!important;min-width:61px!important;min-height:61px!important;
+    max-width:61px!important;max-height:61px!important;flex-basis:61px!important;
+  }
+}
+@media(max-width:560px){
+  header .brand-heading{gap:5px!important;}
+  header .brand-heading #selectedTeamLogo.selected-team-logo,
+  header .brand-heading #selectedTeamLogoFallback.selected-logo-fallback{
+    width:46px!important;height:46px!important;min-width:46px!important;min-height:46px!important;
+    max-width:46px!important;max-height:46px!important;flex-basis:46px!important;
+  }
+}
+@media(max-width:380px){
+  header .brand-heading #selectedTeamLogo.selected-team-logo,
+  header .brand-heading #selectedTeamLogoFallback.selected-logo-fallback{
+    width:40px!important;height:40px!important;min-width:40px!important;min-height:40px!important;
+    max-width:40px!important;max-height:40px!important;flex-basis:40px!important;
+  }
+}
+</style>
 </head><body><div id="teamSelector" class="team-selector" role="dialog" aria-modal="true" aria-labelledby="teamSelectTitle" hidden>
 <div class="team-select-panel"><h2 id="teamSelectTitle">NHL365</h2><p>Choose your NHL team</p><div id="teamChoices" class="team-choices"></div><p class="team-choice-note">Your selection is saved in this browser. You can change teams anytime.</p></div></div>
 <style>
