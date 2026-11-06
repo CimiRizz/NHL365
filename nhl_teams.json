@@ -1,0 +1,162 @@
+[
+  {
+    "id": "ana",
+    "name": "Anaheim Ducks",
+    "code": "ANA"
+  },
+  {
+    "id": "bos",
+    "name": "Boston Bruins",
+    "code": "BOS"
+  },
+  {
+    "id": "buf",
+    "name": "Buffalo Sabres",
+    "code": "BUF"
+  },
+  {
+    "id": "car",
+    "name": "Carolina Hurricanes",
+    "code": "CAR"
+  },
+  {
+    "id": "cbj",
+    "name": "Columbus Blue Jackets",
+    "code": "CBJ"
+  },
+  {
+    "id": "cgy",
+    "name": "Calgary Flames",
+    "code": "CGY"
+  },
+  {
+    "id": "chi",
+    "name": "Chicago Blackhawks",
+    "code": "CHI"
+  },
+  {
+    "id": "col",
+    "name": "Colorado Avalanche",
+    "code": "COL"
+  },
+  {
+    "id": "dal",
+    "name": "Dallas Stars",
+    "code": "DAL"
+  },
+  {
+    "id": "det",
+    "name": "Detroit Red Wings",
+    "code": "DET"
+  },
+  {
+    "id": "edm",
+    "name": "Edmonton Oilers",
+    "code": "EDM"
+  },
+  {
+    "id": "fla",
+    "name": "Florida Panthers",
+    "code": "FLA"
+  },
+  {
+    "id": "lak",
+    "name": "Los Angeles Kings",
+    "code": "LAK"
+  },
+  {
+    "id": "min",
+    "name": "Minnesota Wild",
+    "code": "MIN"
+  },
+  {
+    "id": "mtl",
+    "name": "Montreal Canadiens",
+    "code": "MTL"
+  },
+  {
+    "id": "njd",
+    "name": "New Jersey Devils",
+    "code": "NJD"
+  },
+  {
+    "id": "nsh",
+    "name": "Nashville Predators",
+    "code": "NSH"
+  },
+  {
+    "id": "nyi",
+    "name": "New York Islanders",
+    "code": "NYI"
+  },
+  {
+    "id": "nyr",
+    "name": "New York Rangers",
+    "code": "NYR"
+  },
+  {
+    "id": "ott",
+    "name": "Ottawa Senators",
+    "code": "OTT"
+  },
+  {
+    "id": "phi",
+    "name": "Philadelphia Flyers",
+    "code": "PHI"
+  },
+  {
+    "id": "pit",
+    "name": "Pittsburgh Penguins",
+    "code": "PIT"
+  },
+  {
+    "id": "sea",
+    "name": "Seattle Kraken",
+    "code": "SEA"
+  },
+  {
+    "id": "sjs",
+    "name": "San Jose Sharks",
+    "code": "SJS"
+  },
+  {
+    "id": "stl",
+    "name": "St. Louis Blues",
+    "code": "STL"
+  },
+  {
+    "id": "tbl",
+    "name": "Tampa Bay Lightning",
+    "code": "TBL"
+  },
+  {
+    "id": "tor",
+    "name": "Toronto Maple Leafs",
+    "code": "TOR"
+  },
+  {
+    "id": "uta",
+    "name": "Utah Mammoth",
+    "code": "UTA"
+  },
+  {
+    "id": "van",
+    "name": "Vancouver Canucks",
+    "code": "VAN"
+  },
+  {
+    "id": "vgk",
+    "name": "Vegas Golden Knights",
+    "code": "VGK"
+  },
+  {
+    "id": "wpg",
+    "name": "Winnipeg Jets",
+    "code": "WPG"
+  },
+  {
+    "id": "wsh",
+    "name": "Washington Capitals",
+    "code": "WSH"
+  }
+]
