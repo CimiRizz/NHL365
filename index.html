@@ -883,6 +883,35 @@ header .brand-copy #siteSubtitle .team-name-line {font-style:normal!important;}
 /* Main game and news section titles. */
 main section.matches h2, main section.latest-news h2 {font-style:italic!important;}
 </style>
+<style id="nhl365-v045-mobile-team-picker-fix">
+/* A tall team picker must not be vertically centered offscreen on phones. */
+#teamSelector.team-selector:not([hidden]) {
+  align-items:flex-start !important;
+  justify-content:center !important;
+  overflow-y:auto !important;
+  overscroll-behavior:contain;
+  box-sizing:border-box;
+}
+#teamSelector .team-select-panel {
+  box-sizing:border-box;
+  margin:auto;
+  max-height:calc(100vh - 36px);
+  max-height:calc(100dvh - 36px);
+  overflow-y:auto;
+  overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch;
+}
+body:has(#teamSelector:not([hidden])) {overflow:hidden;}
+@media(max-width:600px) {
+  #teamSelector.team-selector:not([hidden]) {padding:12px !important;}
+  #teamSelector .team-select-panel {
+    max-height:calc(100vh - 24px);
+    max-height:calc(100dvh - 24px);
+    padding:18px;
+    margin:0 auto;
+  }
+}
+</style>
 </head><body><div id="teamSelector" class="team-selector" role="dialog" aria-modal="true" aria-labelledby="teamSelectTitle" hidden>
 <div class="team-select-panel"><h2 id="teamSelectTitle">NHL365</h2><p>Choose your NHL team</p><div id="teamChoices" class="team-choices"></div><p class="team-choice-note">Your selection is saved in this browser. You can change teams anytime.</p></div></div>
 <style>
@@ -1322,7 +1351,18 @@ function setCitySkyline(team){
  img.style.opacity='1';
 }
 
-function showTeamSelector(){ $('teamSelector').hidden=false; }
+function showTeamSelector(){
+ const overlay=$('teamSelector');
+ const panel=overlay.querySelector('.team-select-panel');
+ overlay.hidden=false;
+ // Opening the selector must always show Anaheim at the very top on mobile.
+ overlay.scrollTop=0;
+ if(panel) panel.scrollTop=0;
+ requestAnimationFrame(()=>{
+   overlay.scrollTop=0;
+   if(panel) panel.scrollTop=0;
+ });
+}
 function setTeam(id){
  if(!TEAM_LABELS[id]) return;
  selectedTeam=id;
@@ -1354,7 +1394,7 @@ function setTeam(id){
  $('grid').innerHTML='';
  load();loadMatches();
 }
-$('teamChoices').innerHTML=NHL_TEAMS.map(([id,label])=>`<button type="button" data-team="${id}">${logoImage(id,"choice-logo",TEAM_CARD_THEME,label+" logo")}<span>${escapeHtml(label)}</span></button>`).join('');
+$('teamChoices').innerHTML=[...NHL_TEAMS].sort((a,b)=>a[1].localeCompare(b[1],'en')).map(([id,label])=>`<button type="button" data-team="${id}">${logoImage(id,"choice-logo",TEAM_CARD_THEME,label+" logo")}<span>${escapeHtml(label)}</span></button>`).join('');
 $('teamChoices').addEventListener('click',e=>{const el=e.target.closest('[data-team]');if(el)setTeam(el.dataset.team)});
 $('changeTeam').addEventListener('click',showTeamSelector);
 let savedTeam=null;try{savedTeam=localStorage.getItem('nhl365-team')}catch(e){}
