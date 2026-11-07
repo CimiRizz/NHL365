@@ -1159,6 +1159,66 @@ header .city-skyline-name{z-index:3!important;}
   }
 }
 </style>
+
+<style id="nhl365-v064-mobile-compact-header">
+/* Mobile-only: compact top bar, centered crest, and half-height panorama. */
+@media (max-width:820px) {
+  header { padding-top:8px!important; padding-bottom:10px!important; --nhl-banner-height:clamp(72px,21.5vw,108px)!important; }
+  header .brand {
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) 92px!important;
+    grid-template-rows:92px auto 104px var(--nhl-banner-height)!important;
+    gap:0 8px!important;
+    align-items:center!important;
+    width:100%!important;
+  }
+  header .brand-copy, header .brand-heading {display:contents!important;}
+  header .brand #siteName {
+    grid-column:1!important;grid-row:1!important;
+    align-self:center!important;justify-self:start!important;
+    margin:0!important;font-size:clamp(25px,7vw,38px)!important;
+    white-space:nowrap!important;
+  }
+  header .brand .header-actions {
+    grid-column:2!important;grid-row:1!important;
+    justify-self:end!important;align-self:center!important;
+    margin:0!important;
+  }
+  header .brand #siteSubtitle {
+    grid-column:1/-1!important;grid-row:2!important;
+    justify-self:center!important;align-self:center!important;
+    text-align:center!important;
+    width:100%!important;min-width:0!important;
+    margin:0!important;padding:0!important;
+    line-height:1.13!important;
+  }
+  header .brand #selectedTeamLogo.selected-team-logo {
+    grid-column:1/-1!important;grid-row:3!important;
+    display:block!important;
+    width:auto!important;height:94px!important;
+    min-width:0!important;min-height:0!important;
+    max-width:min(82vw,270px)!important;max-height:94px!important;
+    flex:none!important;
+    justify-self:center!important;align-self:center!important;
+    object-fit:contain!important;object-position:center!important;
+    margin:0!important;padding:0!important;transform:none!important;
+  }
+  header .brand #selectedTeamLogo[hidden] {display:none!important;}
+  header .brand .city-skyline {
+    grid-column:1/-1!important;grid-row:4!important;
+    height:var(--nhl-banner-height)!important;
+    min-height:var(--nhl-banner-height)!important;
+    max-height:var(--nhl-banner-height)!important;
+    width:100%!important;min-width:0!important;
+    align-self:start!important;margin:0!important;
+  }
+  header .brand .city-skyline-picture {height:100%!important;}
+  header .brand .city-skyline-picture img.city-skyline-photo {
+    height:100%!important;width:100%!important;
+    object-fit:contain!important;
+  }
+}
+</style>
 </head><body><div id="teamSelector" class="team-selector" role="dialog" aria-modal="true" aria-labelledby="teamSelectTitle" hidden>
 <div class="team-select-panel"><h2 id="teamSelectTitle">NHL365</h2><p>Choose your NHL team</p><div id="teamChoices" class="team-choices"></div><p class="team-choice-note">Your selection is saved in this browser. You can change teams anytime.</p></div></div>
 <style>
