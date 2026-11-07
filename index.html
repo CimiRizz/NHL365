@@ -1867,12 +1867,12 @@ const NHL_LOGO_BASE='https://assets.nhle.com/logos/nhl/svg/';
 // _light logos are designed to contrast with light surfaces. Header uses _dark.
 const TEAM_CARD_THEME='light';
 const NHL_CODES=['ANA','BOS','BUF','CAR','CBJ','CGY','CHI','COL','DAL','DET','EDM','FLA','LAK','MIN','MTL','NJD','NSH','NYI','NYR','OTT','PHI','PIT','SEA','SJS','STL','TBL','TOR','UTA','VAN','VGK','WPG','WSH'];
-const TEAM_LOGOS=Object.fromEntries(NHL_CODES.map(code=>[code.toLowerCase(), NHL_LOGO_BASE+code+'_dark.svg']));
-const LOCAL_LOGOS=Object.fromEntries(NHL_CODES.filter(code=>code!=='UTA').map(code=>[code.toLowerCase(),'/logos/'+code+'.png']));
+const TEAM_LOGOS=Object.fromEntries(NHL_CODES.map(code=>[code.toLowerCase(),'/logos/'+code+'.png?v=062']));
+const LOCAL_LOGOS=Object.fromEntries(NHL_CODES.map(code=>[code.toLowerCase(),'/logos/'+code+'.png?v=062']));
 LOCAL_LOGOS.nhl='/logos/NHL.png';
 // Cropped header-only PNGs; mobile, cards and selector still use their existing images.
 const DESKTOP_HEADER_LOGOS=Object.fromEntries(Object.keys(LOCAL_LOGOS)
-  .filter(key=>key!=='nhl').map(key=>[key,'/logos/'+key.toUpperCase()+'_DESKTOP.png']));
+  .filter(key=>key!=='nhl').map(key=>[key,'/logos/'+key.toUpperCase()+'.png?v=062']));
 function headerLogoSource(id){
   return window.matchMedia('(min-width:821px)').matches && DESKTOP_HEADER_LOGOS[id]
     ? DESKTOP_HEADER_LOGOS[id] : TEAM_LOGOS[id];
@@ -1883,7 +1883,7 @@ function refreshResponsiveHeaderLogo(){
   if(!chosen || !id || chosen.hidden || chosen.dataset.logoAttempt==='local')return;
   const src=headerLogoSource(id);
   if(!chosen.src.endsWith(src)){
-    chosen.dataset.logoAttempt=src.includes('_DESKTOP.png')?'desktop':'svg';
+    chosen.dataset.logoAttempt='new-local';
     chosen.src=src;
   }
 }
@@ -1912,7 +1912,7 @@ document.addEventListener('error',event=>{
 function logoImage(teamId, cls, theme='dark', alt=''){
  const id=String(teamId||'').toLowerCase();
  const code=id==='nhl'?'NHL':id.toUpperCase();
- const src=NHL_LOGO_BASE+code+'_'+theme+'.svg';
+ const src=TEAM_LOGOS[id]||('/logos/'+code+'.png?v=062');
  return '<img class="'+cls+'" src="'+src+'" data-logo-key="'+code+'" data-logo-theme="'+theme+'" data-logo-fallback="'+code+'" alt="'+escapeHtml(alt)+'" loading="lazy">';
 }
 const TEAM_ID_BY_LABEL={};
@@ -2089,7 +2089,7 @@ function setTeam(id){
  const chosenLogo=$('selectedTeamLogo');
  $('selectedTeamLogoFallback')?.remove();
  if(chosenLogo){
-   chosenLogo.dataset.logoKey=id.toUpperCase();chosenLogo.dataset.logoAttempt=headerLogoSource(id).includes('_DESKTOP.png')?'desktop':'svg';chosenLogo.src=headerLogoSource(id);
+   chosenLogo.dataset.logoKey=id.toUpperCase();chosenLogo.dataset.logoAttempt='new-local';chosenLogo.src=headerLogoSource(id);
    chosenLogo.alt=TEAM_LABELS[id]+' logo';
    chosenLogo.hidden=false;
  }
