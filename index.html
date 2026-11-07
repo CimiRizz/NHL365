@@ -958,6 +958,19 @@ main .grid .item h2 {font-size:17px;line-height:1.32;}
   main .grid .item h2{font-size:15.5px!important;line-height:1.3!important;}
 }
 </style>
+<style id="nhl365-v047-two-team-rows">
+/* Always show the two participating teams on their own lines, at all screen widths. */
+.matches-grid .match-teams{
+ display:flex!important;flex-direction:column!important;align-items:stretch!important;
+ flex-wrap:nowrap!important;gap:4px!important;
+}
+.matches-grid .match-team-row{display:flex;align-items:center;width:100%;min-width:0;}
+.matches-grid .match-team-row .team-inline{display:inline-flex;align-items:center;min-width:0;max-width:100%;}
+.matches-grid .match-team-row .team-inline > span:last-child{overflow-wrap:anywhere;}
+@media(max-width:720px){
+ .matches-grid .match-teams{gap:3px!important;margin:5px 0 0!important;}
+}
+</style>
 </head><body><div id="teamSelector" class="team-selector" role="dialog" aria-modal="true" aria-labelledby="teamSelectTitle" hidden>
 <div class="team-select-panel"><h2 id="teamSelectTitle">NHL365</h2><p>Choose your NHL team</p><div id="teamChoices" class="team-choices"></div><p class="team-choice-note">Your selection is saved in this browser. You can change teams anytime.</p></div></div>
 <style>
@@ -1314,7 +1327,7 @@ async function loadMatches(){
   target.innerHTML=upcoming.map(g=>{
    const d=new Date(g.date);
    const when=d.toLocaleString('en-US',{timeZone:'Europe/Helsinki',weekday:'short',day:'numeric',month:'numeric',hour:'2-digit',minute:'2-digit'});
-   return `<article class="match"><div class="match-meta"><div class="match-date">${escapeHtml(when)}</div><div class="match-location">${escapeHtml(g.venue||'')}</div></div><div class="match-teams">${teamHtml(g.home)} <span class="match-dash">–</span> ${teamHtml(g.away)}</div></article>`
+   return `<article class="match"><div class="match-meta"><div class="match-date">${escapeHtml(when)}</div><div class="match-location">${escapeHtml(g.venue||'')}</div></div><div class="match-teams"><div class="match-team-row">${teamHtml(g.home)}</div><div class="match-team-row">${teamHtml(g.away)}</div></div></article>`
   }).join('');
  }catch(err){target.textContent='Could not load games: '+err.message}
 }
