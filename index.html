@@ -1208,6 +1208,148 @@ header .city-skyline-name{z-index:3!important;}
 .match-time-switch input:focus-visible+.match-time-track{outline:3px solid #f4bb38;outline-offset:2px}
 @media(max-width:560px){.matches-heading{gap:5px}.matches-heading h2{font-size:clamp(17px,5vw,23px)!important}.match-time-control{gap:4px;font-size:10px}.match-time-switch,.match-time-track{width:38px;height:23px}.match-time-thumb{width:17px;height:17px}.match-time-switch input:checked+.match-time-track .match-time-thumb{transform:translateX(15px)}}
 </style>
+
+<style id="nhl365-v071-modern-time-toggle">
+/* v0.71: modern, slimmer, team-colored timezone toggle */
+.matches-heading{margin-bottom:14px!important}
+.match-time-control{
+  display:flex!important;
+  align-items:center!important;
+  gap:9px!important;
+  padding:3px 0 5px!important;
+  color:color-mix(in srgb,var(--team-primary,#176b4e) 42%, #5f6e67)!important;
+}
+.match-time-label{
+  font:800 12px/1.1 system-ui,sans-serif!important;
+  letter-spacing:.01em!important;
+  color:color-mix(in srgb,var(--team-primary,#176b4e) 32%, #64736b)!important;
+  transition:color .18s ease, opacity .18s ease;
+  opacity:.8;
+}
+.match-time-label.active{
+  color:var(--team-primary,#176b4e)!important;
+  opacity:1!important;
+}
+.match-time-switch{
+  position:relative!important;
+  display:inline-flex!important;
+  width:54px!important;
+  height:18px!important;
+  flex:none!important;
+  cursor:pointer!important;
+  margin:0 3px!important;
+}
+.match-time-switch input{
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;height:100%!important;
+  opacity:0!important;cursor:pointer!important;margin:0!important;z-index:3!important;
+}
+.match-time-track{
+  position:relative!important;
+  display:block!important;
+  width:54px!important;
+  height:18px!important;
+  border-radius:999px!important;
+  padding:0 5px!important;
+  box-sizing:border-box!important;
+  background:
+    linear-gradient(180deg,
+      color-mix(in srgb,var(--team-secondary,#d8e8df) 78%, white) 0%,
+      color-mix(in srgb,var(--team-primary,#176b4e) 18%, #8fa39a) 100%)!important;
+  border:1px solid color-mix(in srgb,var(--team-primary,#176b4e) 26%, #7b8b84)!important;
+  box-shadow:
+    inset 0 1px 1px rgba(255,255,255,.55),
+    inset 0 -1px 2px rgba(0,0,0,.18),
+    0 2px 7px rgba(0,0,0,.18)!important;
+  overflow:hidden!important;
+  transition:background .18s ease,border-color .18s ease,box-shadow .18s ease!important;
+}
+.match-time-track::before{
+  content:'';
+  position:absolute;
+  left:16px;
+  right:16px;
+  top:50%;
+  height:2px;
+  transform:translateY(-50%);
+  border-radius:999px;
+  background:linear-gradient(90deg,rgba(255,255,255,.58),rgba(255,255,255,.14),rgba(0,0,0,.16),rgba(255,255,255,.2));
+  opacity:.7;
+}
+.match-time-track::after{
+  content:'';
+  position:absolute;
+  inset:2px 2px auto 2px;
+  height:42%;
+  border-radius:999px;
+  background:linear-gradient(180deg,rgba(255,255,255,.72),rgba(255,255,255,0));
+  pointer-events:none;
+}
+.match-time-thumb{
+  position:absolute!important;
+  top:50%!important;
+  left:2px!important;
+  width:24px!important;
+  height:24px!important;
+  transform:translate(0,-50%)!important;
+  border-radius:50%!important;
+  background:
+    radial-gradient(circle at 32% 28%, rgba(255,255,255,.96) 0 18%, rgba(255,255,255,.42) 19%, transparent 20%),
+    linear-gradient(160deg,
+      color-mix(in srgb,var(--team-secondary,#f2f7f3) 88%, white) 0%,
+      color-mix(in srgb,var(--team-primary,#176b4e) 10%, #dbe6df) 38%,
+      color-mix(in srgb,var(--team-primary,#176b4e) 55%, #95a9a0) 100%)!important;
+  border:1px solid color-mix(in srgb,var(--team-primary,#176b4e) 34%, rgba(255,255,255,.68))!important;
+  box-shadow:
+    0 4px 10px rgba(0,0,0,.26),
+    inset 0 1px 2px rgba(255,255,255,.8),
+    inset 0 -2px 3px rgba(0,0,0,.15)!important;
+  transition:transform .18s ease, background .18s ease, border-color .18s ease!important;
+}
+.match-time-thumb::before{
+  content:'◔';
+  position:absolute;
+  inset:0;
+  display:grid;
+  place-items:center;
+  font-size:11px;
+  font-weight:900;
+  color:color-mix(in srgb,var(--team-primary,#176b4e) 72%, white);
+  text-shadow:0 1px 1px rgba(255,255,255,.65);
+}
+.match-time-switch input:checked + .match-time-track{
+  background:
+    linear-gradient(180deg,
+      color-mix(in srgb,var(--team-secondary,#f3f9ff) 60%, white) 0%,
+      color-mix(in srgb,var(--team-primary,#176b4e) 58%, #3a8fd1) 100%)!important;
+  border-color:color-mix(in srgb,var(--team-primary,#176b4e) 68%, #ffffff)!important;
+  box-shadow:
+    inset 0 1px 1px rgba(255,255,255,.5),
+    inset 0 -1px 2px rgba(0,0,0,.16),
+    0 0 0 1px color-mix(in srgb,var(--team-secondary,#d8e8df) 30%, transparent),
+    0 2px 8px color-mix(in srgb,var(--team-primary,#176b4e) 35%, transparent)!important;
+}
+.match-time-switch input:checked + .match-time-track .match-time-thumb{
+  transform:translate(28px,-50%)!important;
+}
+.match-time-switch input:focus-visible + .match-time-track{
+  outline:3px solid color-mix(in srgb,var(--team-secondary,#f4bb38) 75%, #f4bb38)!important;
+  outline-offset:2px!important;
+}
+@media(max-width:560px){
+  .matches-heading{margin-bottom:12px!important}
+  .match-time-control{gap:7px!important}
+  .match-time-label{font-size:10px!important}
+  .match-time-switch{width:48px!important;height:16px!important}
+  .match-time-track{width:48px!important;height:16px!important;padding:0 5px!important}
+  .match-time-track::before{left:15px;right:15px}
+  .match-time-thumb{width:21px!important;height:21px!important}
+  .match-time-thumb::before{font-size:10px!important}
+  .match-time-switch input:checked + .match-time-track .match-time-thumb{transform:translate(24px,-50%)!important}
+}
+</style>
+
 </head><body><div id="teamSelector" class="team-selector" role="dialog" aria-modal="true" aria-labelledby="teamSelectTitle" hidden>
 <div class="team-select-panel"><h2 id="teamSelectTitle">NHL365</h2><p>Choose your NHL team</p><div id="teamChoices" class="team-choices"></div><p class="team-choice-note">Your selection is saved in this browser. You can change teams anytime.</p></div></div>
 <style>
