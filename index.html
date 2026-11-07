@@ -1444,6 +1444,16 @@ header .city-skyline-name{z-index:3!important;}
  }
 }
 </style>
+
+<style id="nhl365-v077-desktop-top-safe-panorama">
+@media(min-width:821px){
+  header .brand #citySkyline .city-skyline-picture img.city-skyline-photo,
+  header .brand #citySkyline .city-skyline-picture img.city-skyline-photo.loaded{
+    object-fit:cover!important;
+    object-position:50% 0%!important;
+  }
+}
+</style>
 </head><body><div id="teamSelector" class="team-selector" role="dialog" aria-modal="true" aria-labelledby="teamSelectTitle" hidden>
 <div class="team-select-panel"><h2 id="teamSelectTitle">NHL365</h2><p>Choose your NHL team</p><div id="teamChoices" class="team-choices"></div><p class="team-choice-note">Your selection is saved in this browser. You can change teams anytime.</p></div></div>
 <style>
@@ -2615,7 +2625,7 @@ function setCitySkyline(team){
   if(picture)picture.hidden=false;
   fallback.style.backgroundImage='none';
   frame.classList.remove('image-unavailable');
-  const v='075';
+  const v='078';
   const routes=[
     '/static/cities/'+(isMobile?'mobile':'desktop')+'/'+team+'.webp?v='+v,
     '/static/cities/'+(isMobile?'desktop':'mobile')+'/'+team+'.webp?v='+v,
