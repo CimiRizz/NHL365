@@ -1,0 +1,4 @@
+NHL365 v0.81
+32 mobile panoramas cropped from the approved 4x8 city image montage generated November 7, 2026.
+All 800x160 WebP. No text or NHL logo is embedded in the cropped banners. Desktop image files and application logic retained from v0.80.
+Note: each source tile has less intrinsic resolution than an independently generated 800x160 image; upscale does not add genuine detail.
