@@ -1219,6 +1219,118 @@ header .city-skyline-name{z-index:3!important;}
   }
 }
 </style>
+
+<style id="nhl365-v066-mobile-header-refine">
+/* v0.66: Mobile header refinement.
+   - Keep NHL365 and Change Team on the top row.
+   - Center the team logo horizontally.
+   - Keep team name + Games and news left-aligned.
+   - Place the panorama immediately under the subtitle. */
+@media (max-width:820px) {
+  header {
+    padding-top:8px!important;
+    padding-bottom:8px!important;
+    --nhl-banner-height:clamp(56px,17vw,72px)!important;
+  }
+  header .brand {
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) auto!important;
+    grid-template-rows:auto auto auto auto!important;
+    column-gap:10px!important;
+    row-gap:4px!important;
+    align-items:center!important;
+    width:100%!important;
+  }
+  header .brand-copy,
+  header .brand-heading {
+    display:contents!important;
+  }
+  header .brand #siteName {
+    grid-column:1!important;
+    grid-row:1!important;
+    justify-self:start!important;
+    align-self:center!important;
+    margin:0!important;
+    font-size:clamp(25px,7vw,38px)!important;
+    white-space:nowrap!important;
+  }
+  header .brand .header-actions {
+    grid-column:2!important;
+    grid-row:1!important;
+    justify-self:end!important;
+    align-self:center!important;
+    margin:0!important;
+    position:relative!important;
+    z-index:10!important;
+  }
+  header .brand #selectedTeamLogo.selected-team-logo {
+    grid-column:1 / -1!important;
+    grid-row:2!important;
+    justify-self:center!important;
+    align-self:center!important;
+    display:block!important;
+    width:auto!important;
+    height:92px!important;
+    max-width:min(72vw,240px)!important;
+    max-height:92px!important;
+    min-width:0!important;
+    min-height:0!important;
+    object-fit:contain!important;
+    object-position:center center!important;
+    margin:0 auto!important;
+    padding:0!important;
+    transform:none!important;
+    flex:none!important;
+    float:none!important;
+  }
+  header .brand #selectedTeamLogo[hidden] {
+    display:none!important;
+  }
+  header .brand #siteSubtitle {
+    grid-column:1 / -1!important;
+    grid-row:3!important;
+    justify-self:stretch!important;
+    align-self:start!important;
+    width:100%!important;
+    min-width:0!important;
+    margin:0!important;
+    padding:0!important;
+    text-align:left!important;
+    line-height:1.12!important;
+  }
+  header .brand .city-skyline {
+    grid-column:1 / -1!important;
+    grid-row:4!important;
+    width:100%!important;
+    min-width:0!important;
+    height:var(--nhl-banner-height)!important;
+    min-height:var(--nhl-banner-height)!important;
+    max-height:var(--nhl-banner-height)!important;
+    margin:0!important;
+    align-self:start!important;
+    overflow:hidden!important;
+  }
+  header .brand .city-skyline-picture,
+  header .brand .city-skyline-fallback,
+  header .brand .city-skyline-shade {
+    height:100%!important;
+  }
+  header .brand .city-skyline-picture img.city-skyline-photo {
+    width:100%!important;
+    height:100%!important;
+    object-fit:cover!important;
+    object-position:center center!important;
+    display:block!important;
+  }
+  header .brand .city-skyline-name {
+    left:12px!important;
+    right:auto!important;
+    bottom:8px!important;
+    text-align:left!important;
+  }
+}
+</style>
+
 </head><body><div id="teamSelector" class="team-selector" role="dialog" aria-modal="true" aria-labelledby="teamSelectTitle" hidden>
 <div class="team-select-panel"><h2 id="teamSelectTitle">NHL365</h2><p>Choose your NHL team</p><div id="teamChoices" class="team-choices"></div><p class="team-choice-note">Your selection is saved in this browser. You can change teams anytime.</p></div></div>
 <style>
