@@ -316,7 +316,7 @@ class Handler(BaseHTTPRequestHandler):
             body=(ROOT/'index.html').read_bytes();typ='text/html; charset=utf-8'
         elif path.startswith('/static/cities/'):
             filename=path.removeprefix('/static/cities/')
-            if not re.fullmatch(r'[a-z]{3}-(?:1|2|3)\.webp', filename):
+            if not re.fullmatch(r'(?:desktop|mobile)/[a-z]{3}\.webp', filename):
                 self.send_error(404);return
             asset=ROOT/'static'/'cities'/filename
             if not asset.is_file():
