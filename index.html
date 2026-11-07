@@ -912,6 +912,52 @@ body:has(#teamSelector:not([hidden])) {overflow:hidden;}
   }
 }
 </style>
+
+<style id="nhl365-v046-match-layout-mobile-compact">
+/* The venue is paired with the date at the top right of every match card. */
+.matches-grid .match-meta{
+  display:flex;align-items:baseline;justify-content:space-between;
+  gap:8px;min-width:0;width:100%;
+}
+.matches-grid .match-date{flex:0 0 auto;min-width:0;}
+.matches-grid .match-location{
+  flex:1 1 auto;min-width:0;text-align:right;
+  font-size:12px;line-height:1.25;
+  overflow-wrap:anywhere;
+}
+/* Small but readable headlines, on both desktop and mobile. */
+main .latest-news .item h2,
+main .grid .item h2 {font-size:17px;line-height:1.32;}
+@media(max-width:720px){
+  main{padding-top:13px!important;}
+  main .matches{margin-bottom:12px!important;}
+  main .matches h2{font-size:19px!important;margin-bottom:7px!important;}
+  main .matches-grid{grid-template-columns:1fr!important;gap:6px!important;}
+  main .matches-grid .match{
+    padding:9px 12px!important;border-radius:12px!important;
+  }
+  main .matches-grid .match-date{font-size:11.5px!important;}
+  main .matches-grid .match-location{font-size:11px!important;}
+  main .matches-grid .match-teams{
+    margin:5px 0 0!important;gap:5px!important;
+    font-size:14px!important;line-height:1.25!important;
+  }
+  main .matches-grid .team-inline{gap:4px!important;}
+  main .matches-grid .team-logo,
+  main .matches-grid .team-logo-fallback{
+    width:25px!important;height:25px!important;
+  }
+  main .matches-note{
+    font-size:10px!important;line-height:1.25!important;
+    margin-top:5px!important;
+  }
+  main .latest-news{margin-top:0!important;}
+  main .latest-news>h2{font-size:19px!important;margin-bottom:8px!important;}
+  main .latest-news .item{padding:13px!important;gap:6px!important;}
+  main .latest-news .item h2,
+  main .grid .item h2{font-size:15.5px!important;line-height:1.3!important;}
+}
+</style>
 </head><body><div id="teamSelector" class="team-selector" role="dialog" aria-modal="true" aria-labelledby="teamSelectTitle" hidden>
 <div class="team-select-panel"><h2 id="teamSelectTitle">NHL365</h2><p>Choose your NHL team</p><div id="teamChoices" class="team-choices"></div><p class="team-choice-note">Your selection is saved in this browser. You can change teams anytime.</p></div></div>
 <style>
@@ -1268,7 +1314,7 @@ async function loadMatches(){
   target.innerHTML=upcoming.map(g=>{
    const d=new Date(g.date);
    const when=d.toLocaleString('en-US',{timeZone:'Europe/Helsinki',weekday:'short',day:'numeric',month:'numeric',hour:'2-digit',minute:'2-digit'});
-   return `<article class="match"><div class="match-date">${escapeHtml(when)}</div><div class="match-teams">${teamHtml(g.home)} <span class="match-dash">–</span> ${teamHtml(g.away)}</div><div class="match-location">${escapeHtml(g.venue||'')}</div></article>`
+   return `<article class="match"><div class="match-meta"><div class="match-date">${escapeHtml(when)}</div><div class="match-location">${escapeHtml(g.venue||'')}</div></div><div class="match-teams">${teamHtml(g.home)} <span class="match-dash">–</span> ${teamHtml(g.away)}</div></article>`
   }).join('');
  }catch(err){target.textContent='Could not load games: '+err.message}
 }
