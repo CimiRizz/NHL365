@@ -1131,6 +1131,34 @@ header .city-skyline-name{z-index:3!important;}
   }
 }
 </style>
+
+<style id="nhl365-v056-desktop-logo-2x-subtitle-smaller">
+/* Desktop only. Keep header order: text / crest / panorama / team puck.
+   v0.55 crest: 64x64. v0.56: 128x128 (2x). */
+@media (min-width:821px) {
+  header .brand {
+    grid-template-columns: minmax(150px,max-content) 128px minmax(100px,1fr) auto !important;
+    align-items: center !important;
+  }
+  header .brand #selectedTeamLogo.selected-team-logo {
+    width:128px!important;height:128px!important;
+    min-width:128px!important;min-height:128px!important;
+    max-width:128px!important;max-height:128px!important;
+    object-fit:contain!important;object-position:center!important;
+    align-self:center!important;justify-self:center!important;
+    margin:0!important;transform:none!important;
+  }
+  header .brand #selectedTeamLogo[hidden] {display:none!important;}
+  /* Slightly smaller but still distinct two-line team label. */
+  header .brand #siteSubtitle .team-name-line {
+    font-size:12px!important;line-height:1.3!important;
+  }
+  header .brand #siteSubtitle .team-news-line {
+    font-size:11px!important;line-height:1.3!important;
+    font-style:italic!important;
+  }
+}
+</style>
 </head><body><div id="teamSelector" class="team-selector" role="dialog" aria-modal="true" aria-labelledby="teamSelectTitle" hidden>
 <div class="team-select-panel"><h2 id="teamSelectTitle">NHL365</h2><p>Choose your NHL team</p><div id="teamChoices" class="team-choices"></div><p class="team-choice-note">Your selection is saved in this browser. You can change teams anytime.</p></div></div>
 <style>
