@@ -1,5 +1,5 @@
 // Cache the app shell and local icons. News and articles come from the server.
-const CACHE = 'nhl365-shell-v2';
+const CACHE = 'nhl365-shell-v3';
 const ASSETS = ['/manifest.webmanifest', '/static/icons/nhl365-180.png', '/static/icons/nhl365-192.png', '/static/icons/nhl365-512.png'];
 
 self.addEventListener('install', event => {
