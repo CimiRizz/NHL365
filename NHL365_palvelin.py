@@ -306,6 +306,14 @@ def article_for(url):
     return {'status':'summary','paragraphs':[], 'original_url':url,
             'message':'Full article text is unavailable. Please open the original story.'}
 
+INSTALL_ASSETS = {
+    '/sw.js': 'text/javascript; charset=utf-8',
+    '/manifest.webmanifest': 'application/manifest+json',
+    '/static/icons/nhl365-180.png': 'image/png',
+    '/static/icons/nhl365-192.png': 'image/png',
+    '/static/icons/nhl365-512.png': 'image/png',
+}
+
 class Handler(BaseHTTPRequestHandler):
     def do_HEAD(self):
         self.send_response(200);self.end_headers()
@@ -314,6 +322,11 @@ class Handler(BaseHTTPRequestHandler):
         path=parsed.path
         if path in ('/','/index.html'):
             body=(ROOT/'index.html').read_bytes();typ='text/html; charset=utf-8'
+        elif path in INSTALL_ASSETS:
+            asset=ROOT/path.lstrip('/')
+            if not asset.is_file():
+                self.send_error(404);return
+            body=asset.read_bytes();typ=INSTALL_ASSETS[path]
         elif path.startswith('/static/cities/'):
             filename=path.removeprefix('/static/cities/')
             current_name = re.fullmatch(r'(desktop|mobile)/[a-z]+(?:-[a-z]+)*NHL_\1\.webp', filename)
