@@ -1,6 +1,6 @@
 // Cache the app shell and local icons. News and articles come from the server.
-const CACHE = 'nhl365-shell-v13';
-const ASSETS = ["/manifest.webmanifest?v=13", "/static/icons/nhl365-180.png?v=13", "/static/icons/nhl365-192.png?v=13", "/static/icons/nhl365-512.png?v=13"];
+const CACHE = 'nhl365-shell-v14';
+const ASSETS = ["/manifest.webmanifest?v=13", "/nhl365-180.png?v=14", "/nhl365-192.png?v=14", "/nhl365-512.png?v=14"];
 
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(['/', ...ASSETS])).then(() => self.skipWaiting()));

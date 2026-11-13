@@ -309,9 +309,9 @@ def article_for(url):
 INSTALL_ASSETS = {
     '/sw.js': 'text/javascript; charset=utf-8',
     '/manifest.webmanifest': 'application/manifest+json',
-    '/static/icons/nhl365-180.png': 'image/png',
-    '/static/icons/nhl365-192.png': 'image/png',
-    '/static/icons/nhl365-512.png': 'image/png',
+    '/nhl365-180.png': 'image/png',
+    '/nhl365-192.png': 'image/png',
+    '/nhl365-512.png': 'image/png',
 }
 
 class Handler(BaseHTTPRequestHandler):
